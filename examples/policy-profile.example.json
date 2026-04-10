@@ -1,0 +1,5 @@
+{
+  "profile": "team-review-v0",
+  "protectedBranches": ["release"],
+  "approvalRequiredFor": ["NETWORK_ACCESS"]
+}

@@ -10,6 +10,7 @@ Ce dépôt public est un pack testeur minimal. Il sert à comprendre le produit,
 - Codex prêt avec friction native résiduelle réduite.
 - Vibe expérimental / limité.
 - Accès testeur, portail, reveal one-shot, feedback corrélé et un chemin gouverné minimal `WRITE_FILE` prouvé.
+- Un policy profile minimal par client pilot, appliqué côté ADP, dans un cadre strictement borné.
 
 ## Flux d'accès
 
@@ -26,6 +27,30 @@ Le portail est obligatoire.
 Le reveal est obligatoire.
 Le clone seul est insuffisant.
 Aucun secret n'est versionné dans ce dépôt.
+La vraie configuration active d'un policy profile ne vit pas dans ce dépôt public.
+
+## Policy profile minimal
+
+Vous pouvez aujourd'hui tester l'existence d'un profile minimal propre à un client pilot.
+
+Ce profile :
+
+- vit côté ADP
+- est validé par schéma
+- est compilé en overlay interne borné
+- agit réellement sur la décision
+- fonctionne aujourd'hui dans le périmètre prouvé sur Claude et Codex
+
+Ce profile n'est pas :
+
+- un éditeur libre de policies
+- une configuration active stockée dans ce repo
+- un self-serve large
+- une ouverture Vibe
+
+Le portail reste obligatoire.
+Le reveal reste obligatoire.
+Le backend reste obligatoire.
 
 ## Quel host choisir
 
@@ -47,6 +72,7 @@ Aucun secret n'est versionné dans ce dépôt.
 - [Quickstart Claude](docs/quickstart-claude-fr.md)
 - [Quickstart Codex](docs/quickstart-codex-fr.md)
 - [Quickstart Vibe](docs/quickstart-vibe-fr.md)
+- [Policy profile minimal](docs/policy-profile-fr.md)
 - [FAQ](docs/faq-fr.md)
 - [Deep tech](docs/deep-tech-fr.md)
 
@@ -59,6 +85,7 @@ Aucun secret n'est versionné dans ce dépôt.
 - reveal one-shot
 - Claude prêt
 - Codex prêt
+- policy profile minimal par client pilot
 - feedback corrélé
 - un chemin gouverné minimal `WRITE_FILE` prouvé
 
@@ -69,6 +96,8 @@ Aucun secret n'est versionné dans ce dépôt.
 ### Expérimental / limité
 
 - Vibe
+- self-serve large policy profile
+- édition libre des policies
 
 ### À venir / conditionnel
 
@@ -76,4 +105,3 @@ Aucun secret n'est versionné dans ce dépôt.
 - multi-host large
 - self-serve complet
 - plateforme générale
-

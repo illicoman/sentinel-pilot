@@ -10,6 +10,7 @@ Ce pack public raconte une seule histoire: comprendre Sentinel, demander un acc�
 - Faire un reveal one-shot.
 - Vérifier `GET /health`.
 - Vérifier `POST /evaluate`.
+- Constater qu'un profile minimal par client pilot peut influencer la décision dans un cadre borné.
 - Configurer Claude localement.
 - Configurer Codex localement.
 - Envoyer un feedback corrélé après un test.
@@ -25,16 +26,19 @@ Ce pack public raconte une seule histoire: comprendre Sentinel, demander un acc�
 
 - Claude est le chemin principal recommandé.
 - Codex est disponible proprement après reveal.
+- Le profile minimal par client pilot est prouvé dans un cadre borné sur Claude et Codex.
+- La vraie configuration active d'un profile vit côté ADP, pas dans ce repo public.
 - Vibe reste visible pour montrer la direction produit, pas pour annoncer une parité de maturité.
 - Le portail est obligatoire.
 - Le reveal est obligatoire.
 - Le clone seul est insuffisant.
+- Ce repo public ne suffit pas à activer un profile.
 
 ## Ce qui reste en exploration
 
 - Vibe comme chemin plus large et plus stable
+- self-serve large pour les policy profiles
+- édition libre des policies
 - Agents IA non-code
 - multi-host large
-- self-serve complet
 - plateforme générale
-

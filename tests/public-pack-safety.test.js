@@ -15,11 +15,14 @@ const essentialFiles = [
   'docs/quickstart-claude-fr.md',
   'docs/quickstart-codex-fr.md',
   'docs/quickstart-vibe-fr.md',
+  'docs/policy-profile-fr.md',
   'docs/faq-fr.md',
   'docs/deep-tech-fr.md',
   'examples/mcp.json.example',
   'examples/codex.config.toml.example',
   'examples/vibe.config.toml.example',
+  'examples/policy-profile.schema.json',
+  'examples/policy-profile.example.json',
   'scripts/smoke-health.sh',
   'scripts/smoke-evaluate.sh',
   'tests/public-pack-safety.test.js',
@@ -59,8 +62,11 @@ const combinedText = [
   read('docs/quickstart-claude-fr.md'),
   read('docs/quickstart-codex-fr.md'),
   read('docs/quickstart-vibe-fr.md'),
+  read('docs/policy-profile-fr.md'),
   read('docs/faq-fr.md'),
   read('docs/deep-tech-fr.md'),
+  read('examples/policy-profile.schema.json'),
+  read('examples/policy-profile.example.json'),
 ].join('\n');
 
 test('essential public pack files exist', () => {
@@ -72,6 +78,7 @@ test('essential public pack files exist', () => {
   assert.match(readme, /\[Demander un accès\]\(docs\/request-access-fr\.md\)/);
   assert.match(readme, /\[Quickstart Claude\]\(docs\/quickstart-claude-fr\.md\)/);
   assert.match(readme, /\[Quickstart Codex\]\(docs\/quickstart-codex-fr\.md\)/);
+  assert.match(readme, /\[Policy profile minimal\]\(docs\/policy-profile-fr\.md\)/);
   assert.match(readme, /\[FAQ\]\(docs\/faq-fr\.md\)/);
   assert.match(readme, /\[Deep tech\]\(docs\/deep-tech-fr\.md\)/);
 });
@@ -125,12 +132,18 @@ test('host statuses stay coherent and explicit', () => {
   assert.match(combinedText, /Codex prêt/);
   assert.match(combinedText, /Codex prêt avec friction native résiduelle réduite/);
   assert.match(combinedText, /Vibe expérimental \/ limité/);
+  assert.match(combinedText, /policy profile minimal par client pilot/i);
 });
 
 test('canonical warnings remain explicit', () => {
   assert.match(combinedText, /Le portail est obligatoire\./);
   assert.match(combinedText, /Le reveal est obligatoire\./);
   assert.match(combinedText, /Le clone seul est insuffisant\./);
+  assert.match(combinedText, /La vraie configuration active d'un policy profile ne vit pas dans ce dépôt public\./);
+  assert.match(combinedText, /La vraie configuration active vit côté ADP\./);
+  assert.match(combinedText, /Ce repo public ne contient jamais la vraie configuration(?: active)? d[' ]un client pilot\./);
+  assert.match(combinedText, /Ce repo public ne suffit pas à activer un profile\./);
+  assert.match(combinedText, /Ce n'est pas du policy authoring libre\./);
 });
 
 test('the repo does not suggest a false canonical path', () => {
@@ -140,9 +153,47 @@ test('the repo does not suggest a false canonical path', () => {
     /Vibe est pret/i,
     /Vibe prêt/i,
     /Vibe pret/i,
+    /self-serve large est ouvert/i,
+    /édition libre des policies est ouverte/i,
   ];
 
   for (const pattern of forbiddenClaims) {
     assert.doesNotMatch(combinedText, pattern);
   }
+});
+
+test('public policy profile schema stays minimal and excludes internal or inactive fields', () => {
+  const schema = JSON.parse(read('examples/policy-profile.schema.json'));
+  const example = JSON.parse(read('examples/policy-profile.example.json'));
+  const schemaText = JSON.stringify(schema);
+  const exampleText = JSON.stringify(example);
+
+  assert.deepEqual(Object.keys(schema.properties).sort(), [
+    'approvalRequiredFor',
+    'profile',
+    'protectedBranches',
+  ]);
+  assert.ok(Array.isArray(schema.anyOf));
+  assert.match(schemaText, /NETWORK_ACCESS/);
+
+  [
+    'disabledPolicies',
+    'override',
+    'riskThreshold',
+    'allowTools',
+    'denyTools',
+    'hostMode',
+    'sandboxAvailable',
+    'executionMode',
+    'protectedPaths',
+    'sandboxRequiredFor',
+    'enabledBasePack',
+  ].forEach((fieldName) => {
+    assert.doesNotMatch(schemaText, new RegExp(fieldName));
+    assert.doesNotMatch(exampleText, new RegExp(fieldName));
+  });
+
+  assert.equal(typeof example.profile, 'string');
+  assert.ok(Array.isArray(example.protectedBranches));
+  assert.ok(Array.isArray(example.approvalRequiredFor));
 });

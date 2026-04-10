@@ -6,6 +6,10 @@ Le portail est obligatoire.
 Le reveal est obligatoire.
 Le clone seul est insuffisant.
 
+Le profile minimal par client pilot peut influencer la décision dans ce parcours.
+Mais ce profile reste géré côté ADP.
+Aucune édition libre locale n'est ouverte dans ce repo.
+
 ## 1. Obtenir l'accès
 
 1. Demandez un accès.
@@ -97,4 +101,4 @@ claude --print \
 - Claude prêt
 - un flux public lisible
 - un premier appel utile après reveal
-
+- un profile minimal par client pilot peut influencer la décision, sans ouvrir un éditeur libre de policies

@@ -6,6 +6,10 @@ Le portail est obligatoire.
 Le reveal est obligatoire.
 Le clone seul est insuffisant.
 
+Le profile minimal par client pilot peut influencer la décision dans ce parcours.
+Mais ce profile reste géré côté ADP.
+Aucune édition libre locale n'est ouverte dans ce repo.
+
 ## 1. Partir du reveal
 
 Le quickstart Codex suppose que vous avez déjà:
@@ -89,3 +93,4 @@ Codex prêt avec friction native résiduelle réduite.
 
 Le premier signal de vérité reste le tool call utile. Un affichage de type `codex mcp list` peut rester moins parlant qu'un tool call réussi.
 
+Le policy profile minimal, quand il existe pour votre client pilot, est appliqué côté ADP. Ce repo public n'héberge ni la vraie configuration active, ni un mécanisme d'édition libre.
