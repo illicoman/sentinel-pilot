@@ -1,0 +1,16 @@
+# Exemple uniquement.
+# Vibe est experimental / limite.
+# Ne commencez pas ici.
+# Copier vers .vibe/config.toml seulement apres le portail et le reveal.
+# Remplacer __REVEAL_MCP_URL__ par l URL MCP tokenisee issue du reveal.
+# Ne jamais versionner cette URL.
+# Garder MISTRAL_API_KEY en local seulement.
+
+[[mcp_servers]]
+name = "agent_decision_plane_public"
+transport = "streamable-http"
+url = "__REVEAL_MCP_URL__"
+startup_timeout_sec = 20
+tool_timeout_sec = 120
+sampling_enabled = false
+

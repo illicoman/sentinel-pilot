@@ -1,0 +1,91 @@
+# Quickstart Codex
+
+Codex est prêt. Claude reste recommandé pour le premier test, puis Codex vient juste après.
+
+Le portail est obligatoire.
+Le reveal est obligatoire.
+Le clone seul est insuffisant.
+
+## 1. Partir du reveal
+
+Le quickstart Codex suppose que vous avez déjà:
+
+- un accès approuvé
+- une session portail
+- un reveal one-shot effectué
+- `AGENT_DECISION_API_KEY`
+- `AGENT_DECISION_MCP_TOKEN`
+
+Gardez ces valeurs dans le shell local seulement.
+
+## 2. Cloner le repo
+
+```bash
+git clone https://github.com/illicoman/sentinel-pilot.git
+cd sentinel-pilot
+```
+
+## 3. Matérialiser la configuration locale Codex
+
+```bash
+mkdir -p .codex
+cp examples/codex.config.toml.example .codex/config.toml
+```
+
+Ne committez jamais `.codex/config.toml`.
+
+## 4. Exporter les variables locales
+
+```bash
+export AGENT_DECISION_API_URL='https://decision-api.frenchlink.fr'
+export AGENT_DECISION_API_KEY='<révélée une seule fois dans le portail>'
+export AGENT_DECISION_MCP_TOKEN='<révélé une seule fois dans le portail>'
+```
+
+## 5. Vérifier `/health`
+
+```bash
+curl -fsS "${AGENT_DECISION_API_URL%/}/health"
+```
+
+## 6. Vérifier `/evaluate`
+
+```bash
+curl -fsS "${AGENT_DECISION_API_URL%/}/evaluate" \
+  -H 'content-type: application/json' \
+  -H "x-api-key: $AGENT_DECISION_API_KEY" \
+  -d '{
+    "userRequest": "update sensitive config in prod",
+    "host": "codex",
+    "environment": "prod",
+    "target": "config/prod.env"
+  }'
+```
+
+## 7. Vérifier le MCP public
+
+```bash
+curl -i -X OPTIONS 'https://decision-mcp.frenchlink.fr/mcp' \
+  -H "Authorization: Bearer $AGENT_DECISION_MCP_TOKEN"
+```
+
+## 8. Premier test utile dans Codex
+
+Prompt recommandé:
+
+```text
+Use only the MCP tool list_policy_packs and return only the pack ids, one per line.
+```
+
+Puis:
+
+```text
+Use only the MCP tool explain_decision for: update sensitive config in prod on config/prod.env. Reply only with three lines: Action, Decision, Next safe action.
+```
+
+## Note de réalité
+
+Codex prêt avec friction native résiduelle réduite.
+
+Le premier signal de vérité reste le tool call utile. Un affichage de type `codex mcp list` peut rester moins parlant qu'un tool call réussi.
+

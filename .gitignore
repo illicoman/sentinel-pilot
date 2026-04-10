@@ -1,0 +1,10 @@
+.mcp.json
+.codex/
+.vibe/
+.env
+.env.*
+!.env.example
+*.local
+*.tmp
+.DS_Store
+

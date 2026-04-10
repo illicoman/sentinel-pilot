@@ -1,0 +1,14 @@
+{
+  "_warning": [
+    "Exemple incomplet. Le portail et le reveal sont obligatoires.",
+    "Copiez ce fichier vers .mcp.json seulement apres le reveal.",
+    "Remplacez __REVEAL_MCP_URL__ par l URL MCP revelee puis gardez-la hors Git."
+  ],
+  "mcpServers": {
+    "agent_decision_plane_public": {
+      "type": "http",
+      "url": "__REVEAL_MCP_URL__"
+    }
+  }
+}
+

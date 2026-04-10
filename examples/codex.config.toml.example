@@ -1,0 +1,19 @@
+# Exemple uniquement.
+# Copier vers .codex/config.toml seulement apres le portail et le reveal.
+# Ne pas committer .codex/config.toml.
+# Garder AGENT_DECISION_MCP_TOKEN dans le shell local.
+
+[mcp_servers.agent_decision_plane_public]
+url = "https://decision-mcp.frenchlink.fr/mcp"
+bearer_token_env_var = "AGENT_DECISION_MCP_TOKEN"
+enabled = true
+required = true
+startup_timeout_sec = 20
+tool_timeout_sec = 60
+enabled_tools = [
+  "evaluate_execution_decision",
+  "simulate_execution_decision",
+  "list_policy_packs",
+  "explain_decision",
+]
+
