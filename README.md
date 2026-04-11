@@ -10,7 +10,7 @@ Ce dépôt public est un pack testeur minimal. Il sert à comprendre le produit,
 - Codex prêt avec friction native résiduelle réduite.
 - Vibe expérimental / limité.
 - Accès testeur, portail, reveal one-shot, feedback corrélé et un chemin gouverné minimal `WRITE_FILE` prouvé.
-- Un policy profile minimal par client pilot, appliqué côté ADP, dans un cadre strictement borné.
+- Un policy profile minimal par client pilot, appliqué côté ADP, avec `executionMode` borné à `shadow`, `review`, `enforced`.
 
 ## Flux d'accès
 
@@ -40,6 +40,13 @@ Ce profile :
 - est compilé en overlay interne borné
 - agit réellement sur la décision
 - fonctionne aujourd'hui dans le périmètre prouvé sur Claude et Codex
+- supporte aujourd'hui trois modes explicites :
+  - `shadow`
+  - `review`
+  - `enforced`
+- reste monotone :
+  - il peut annoter ou rehausser
+  - il ne peut jamais relaxer une décision plus stricte du moteur
 
 Ce profile n'est pas :
 
@@ -51,6 +58,9 @@ Ce profile n'est pas :
 Le portail reste obligatoire.
 Le reveal reste obligatoire.
 Le backend reste obligatoire.
+Pas de self-serve large.
+`review` et `enforced` peuvent parfois produire le même verdict observable sur le sous-ensemble v1 actuel.
+Ce n'est pas un bug.
 
 ## Quel host choisir
 
@@ -86,6 +96,7 @@ Le backend reste obligatoire.
 - Claude prêt
 - Codex prêt
 - policy profile minimal par client pilot
+- modes `shadow / review / enforced`
 - feedback corrélé
 - un chemin gouverné minimal `WRITE_FILE` prouvé
 

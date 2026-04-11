@@ -28,6 +28,24 @@ Claude est le chemin recommandé et prêt aujourd'hui. Codex est prêt aussi, av
 
 Oui, dans un cadre minimal et borné. Un profile minimal par client pilot existe aujourd'hui côté ADP. Il ne s'agit pas d'un éditeur libre de policies.
 
+## Que signifie `executionMode` ?
+
+`executionMode` fixe la manière dont le profile minimal agit sur la décision. Aujourd'hui, il est borné à trois valeurs :
+
+- `shadow`
+- `review`
+- `enforced`
+
+## Quelle différence entre shadow, review et enforced ?
+
+- `shadow` lit le profile et expose une décision suggérée, mais ne change pas le verdict final.
+- `review` peut rehausser le verdict final vers `REQUIRE_APPROVAL` quand le profile matche.
+- `enforced` rend l'effet du profile bindant dans la décision finale, sans jamais relaxer le moteur.
+
+## Pourquoi review et enforced peuvent-ils parfois donner le même verdict visible ?
+
+Parce que le sous-ensemble v1 actuel reste volontairement étroit. Aujourd'hui, les overlays publics prouvés relèvent surtout vers `REQUIRE_APPROVAL`. Dans ce cadre, `review` et `enforced` peuvent partager le même verdict observable. La différence reste réelle dans le mode, l'audit et l'effet appliqué. Ce n'est pas un bug.
+
 ## Où vit la vraie configuration ?
 
 La vraie configuration active vit côté ADP. Ce repo public ne contient qu'un schéma et un exemple documentaires.
@@ -40,9 +58,13 @@ Non. Ce repo public ne contient jamais la vraie configuration active d'un client
 
 Non. Ce n'est pas du policy authoring libre. Vous ne pouvez pas écrire des règles libres, exposer des objets internes du moteur ou modifier l'enforcement depuis ce repo.
 
+## Le profile peut-il relaxer une décision plus stricte du moteur ?
+
+Non. Le profile minimal public reste monotone. Il peut annoter ou rehausser, mais il ne peut jamais assouplir une décision plus stricte du moteur.
+
 ## Quels hosts sont couverts aujourd'hui par ce profile minimal ?
 
-Le périmètre public prouvé aujourd'hui est Claude et Codex. Vibe reste hors scope pour ce profile minimal public.
+Le périmètre public prouvé aujourd'hui est `/evaluate`, Claude et Codex. Vibe reste hors scope pour ce profile minimal public.
 
 ## Vibe est-il concerné ?
 

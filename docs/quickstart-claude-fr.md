@@ -9,6 +9,8 @@ Le clone seul est insuffisant.
 Le profile minimal par client pilot peut influencer la décision dans ce parcours.
 Mais ce profile reste géré côté ADP.
 Aucune édition libre locale n'est ouverte dans ce repo.
+Quand un profile existe pour votre client pilot, il peut aussi porter un `executionMode` borné à `shadow`, `review` ou `enforced`.
+Cette configuration ne se fait pas dans ce repo.
 
 ## 1. Obtenir l'accès
 
@@ -101,4 +103,4 @@ claude --print \
 - Claude prêt
 - un flux public lisible
 - un premier appel utile après reveal
-- un profile minimal par client pilot peut influencer la décision, sans ouvrir un éditeur libre de policies
+- un profile minimal par client pilot peut influencer la décision, y compris avec `executionMode`, sans ouvrir un éditeur libre de policies

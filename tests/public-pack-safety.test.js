@@ -133,6 +133,10 @@ test('host statuses stay coherent and explicit', () => {
   assert.match(combinedText, /Codex prêt avec friction native résiduelle réduite/);
   assert.match(combinedText, /Vibe expérimental \/ limité/);
   assert.match(combinedText, /policy profile minimal par client pilot/i);
+  assert.match(combinedText, /executionMode/);
+  assert.match(combinedText, /shadow/);
+  assert.match(combinedText, /review/);
+  assert.match(combinedText, /enforced/);
 });
 
 test('canonical warnings remain explicit', () => {
@@ -144,6 +148,9 @@ test('canonical warnings remain explicit', () => {
   assert.match(combinedText, /Ce repo public ne contient jamais la vraie configuration(?: active)? d[' ]un client pilot\./);
   assert.match(combinedText, /Ce repo public ne suffit pas à activer un profile\./);
   assert.match(combinedText, /Ce n'est pas du policy authoring libre\./);
+  assert.match(combinedText, /pas de self-serve large/i);
+  assert.match(combinedText, /monotone/i);
+  assert.match(combinedText, /`?review`? et `?enforced`? peuvent parfois produire le même verdict observable/i);
 });
 
 test('the repo does not suggest a false canonical path', () => {
@@ -155,6 +162,8 @@ test('the repo does not suggest a false canonical path', () => {
     /Vibe pret/i,
     /self-serve large est ouvert/i,
     /édition libre des policies est ouverte/i,
+    /review et enforced sont toujours différents/i,
+    /review et enforced donnent toujours des verdicts différents/i,
   ];
 
   for (const pattern of forbiddenClaims) {
@@ -170,11 +179,14 @@ test('public policy profile schema stays minimal and excludes internal or inacti
 
   assert.deepEqual(Object.keys(schema.properties).sort(), [
     'approvalRequiredFor',
+    'executionMode',
     'profile',
     'protectedBranches',
   ]);
   assert.ok(Array.isArray(schema.anyOf));
   assert.match(schemaText, /NETWORK_ACCESS/);
+  assert.deepEqual(schema.properties.executionMode.enum, ['shadow', 'review', 'enforced']);
+  assert.equal(example.executionMode, 'review');
 
   [
     'disabledPolicies',
@@ -184,7 +196,6 @@ test('public policy profile schema stays minimal and excludes internal or inacti
     'denyTools',
     'hostMode',
     'sandboxAvailable',
-    'executionMode',
     'protectedPaths',
     'sandboxRequiredFor',
     'enabledBasePack',

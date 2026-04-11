@@ -11,7 +11,11 @@ Aujourd hui, ce profile :
 - est applique cote ADP
 - est compile en overlay interne borne
 - agit reellement sur la decision
-- fonctionne dans le perimetre prouve sur Claude et Codex
+- fonctionne dans le perimetre prouve sur `/evaluate`, Claude MCP et Codex
+- supporte trois modes explicites :
+  - `shadow`
+  - `review`
+  - `enforced`
 
 Ce profile ne vit pas dans ce repo.
 
@@ -37,6 +41,7 @@ Le sens produit reste le meme :
 Sous-ensemble public strictement borne aujourd hui :
 
 - `profile`
+- `executionMode`
 - `protectedBranches`
 - `approvalRequiredFor`
 
@@ -54,6 +59,74 @@ Important :
 - ce ne sont pas des configurations actives
 - ce repo ne contient jamais la vraie configuration d un client pilot
 
+`executionMode` est borne a :
+
+- `shadow`
+- `review`
+- `enforced`
+
+## Ce que signifient les trois modes
+
+### `shadow`
+
+- le profile est lu
+- le match est calcule
+- la decision suggeree du profile est exposee
+- le verdict final reste celui du moteur de base
+
+Ce mode sert a :
+
+- apprendre
+- calibrer
+- prouver un effet sans rendre la contrainte executoire
+
+### `review`
+
+- le profile est lu
+- s il matche, il peut rehausser la decision finale vers `REQUIRE_APPROVAL`
+- il ne peut jamais assouplir une decision existante
+- si le moteur est deja plus strict, le verdict le plus strict reste le verdict final
+
+Ce mode sert a :
+
+- rendre explicite une validation humaine
+- sans detendre le moteur
+
+### `enforced`
+
+- le profile est lu
+- s il matche, son effet est bindant dans la decision finale
+- il reste monotone
+- il ne peut jamais relaxer une decision existante
+
+Ce mode sert a :
+
+- poser une contrainte reelle avant execution
+- sans ouvrir un moteur de regles libre
+
+Important :
+
+- sur le sous-ensemble v1 actuel, `review` et `enforced` peuvent parfois produire le meme verdict observable
+- la difference reste visible dans le mode, l audit et l effet applique
+- ce n est pas un bug
+
+## Pourquoi la monotonie compte
+
+Ici, monotone signifie :
+
+- le profile peut annoter
+- le profile peut rehausser
+- le profile peut rendre plus strict
+- le profile ne peut jamais relaxer une decision plus stricte du moteur
+
+Le client ne peut donc pas :
+
+- enlever un `DENY`
+- enlever un `REQUIRE_SANDBOX`
+- produire un `ALLOW` libre contre une decision plus stricte
+- modifier `permit / verify`
+- desactiver le fail-closed
+
 ## Comment il est valide et applique
 
 Le chemin reel est :
@@ -70,6 +143,7 @@ Donc :
 - le portail reste obligatoire
 - le reveal reste obligatoire
 - le backend reste obligatoire
+- le repo public ne suffit pas a activer un profile
 
 ## Ce que ce profile permet vraiment aujourd hui
 
@@ -79,7 +153,9 @@ PROUVE :
 - il est valide
 - il est applique cote ADP
 - il change reellement la decision
-- il fonctionne aujourd hui sur Claude et Codex dans le perimetre prouve
+- il fonctionne aujourd hui sur `/evaluate`, Claude et Codex dans le perimetre prouve
+- il supporte `shadow`, `review`, `enforced`
+- la monotonie est respectee
 
 NON OUVERT / HORS SCOPE :
 
@@ -101,6 +177,14 @@ Le client ne peut pas :
 - acceder aux objets internes du moteur
 - modifier `permit / verify`
 - ouvrir Vibe via ce profile
+
+Le client peut aujourd hui :
+
+- avoir un profile minimal par client pilot
+- demander quelques bornes validees
+- choisir un `executionMode` borne
+
+Le client ne peut pas transformer Sentinel en policy engine self-serve.
 
 Ce profile minimal n est pas un editeur de policies.
 
