@@ -137,6 +137,10 @@ test('host statuses stay coherent and explicit', () => {
   assert.match(combinedText, /shadow/);
   assert.match(combinedText, /review/);
   assert.match(combinedText, /enforced/);
+  assert.match(combinedText, /PROUVÉ LIVE/);
+  assert.match(combinedText, /PROUVÉ LOCAL/);
+  assert.match(combinedText, /PROUVÉ OFFLINE/);
+  assert.match(combinedText, /HORS SCOPE/);
 });
 
 test('canonical warnings remain explicit', () => {
@@ -151,6 +155,9 @@ test('canonical warnings remain explicit', () => {
   assert.match(combinedText, /pas de self-serve large/i);
   assert.match(combinedText, /monotone/i);
   assert.match(combinedText, /`?review`? et `?enforced`? peuvent parfois produire le même verdict observable/i);
+  assert.match(combinedText, /trace canonique v0/i);
+  assert.match(combinedText, /policy verifier offline v0/i);
+  assert.match(combinedText, /decision-quality-checker v0 mini/i);
 });
 
 test('the repo does not suggest a false canonical path', () => {

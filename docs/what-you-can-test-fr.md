@@ -16,6 +16,10 @@ Ce pack public raconte une seule histoire: comprendre Sentinel, demander un acc�
 - Configurer Codex localement.
 - Envoyer un feedback corrélé après un test.
 - Comprendre qu'un chemin gouverné minimal `WRITE_FILE` est déjà prouvé.
+- Comprendre qu'une couche offline de preuve existe côté ADP :
+  - trace canonique v0
+  - policy verifier offline v0
+  - decision-quality-checker v0 mini
 
 ## Statut des hosts
 
@@ -39,11 +43,40 @@ Ce pack public raconte une seule histoire: comprendre Sentinel, demander un acc�
 - Ce repo public ne suffit pas à activer un profile.
 - Pas de self-serve large.
 
+## Grille de preuve utile
+
+### PROUVÉ LIVE
+
+- accès testeur
+- portail
+- reveal one-shot
+- `/health`
+- `/evaluate`
+- Claude
+- Codex
+- policy profile minimal
+- `executionMode`
+
+### PROUVÉ LOCAL
+
+- schéma public et exemple public du policy profile
+
+### PROUVÉ OFFLINE
+
+- trace canonique v0
+- policy verifier offline v0
+- decision-quality-checker v0 mini
+
+### HORS SCOPE
+
+- Vibe comme chemin canonique
+- self-serve large
+- édition libre des policies
+- moteur configurable par le client
+
 ## Ce qui reste en exploration
 
 - Vibe comme chemin plus large et plus stable
-- self-serve large pour les policy profiles
-- édition libre des policies
 - Agents IA non-code
 - multi-host large
 - plateforme générale

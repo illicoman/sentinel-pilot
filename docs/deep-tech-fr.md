@@ -22,6 +22,25 @@ Les prompts et la revue après coup arrivent souvent trop tard quand un agent ve
 
 Sentinel ouvre un terrain d'étude sur la gouvernance d'agents avant exécution, la séparation des couches et la comparaison honnête entre hosts réels à maturités différentes.
 
+## Socle de vérification déjà présent
+
+Le produit porte déjà côté ADP une petite pile de vérification bornée :
+
+- trace canonique v0
+- policy verifier offline v0
+- decision-quality-checker v0 mini
+
+Statut :
+
+- `PROUVÉ OFFLINE`
+
+Cette pile :
+
+- améliore la comparabilité des traces
+- rend certaines claims plus défendables
+- ne modifie pas le hot path
+- ne transforme pas Sentinel en plateforme générale de model checking
+
 ## Portée publique de ce repo
 
 Ce dépôt ne prétend pas exposer toute la plateforme. Il rend seulement testable le chemin public minimal: accès, portail, reveal, config locale et premier test utile.
@@ -29,4 +48,3 @@ Ce dépôt ne prétend pas exposer toute la plateforme. Il rend seulement testab
 Site public utile:
 
 - `https://frenchlink.fr/agent-decision-plane-testeurs/`
-

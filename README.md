@@ -11,6 +11,10 @@ Ce dépôt public est un pack testeur minimal. Il sert à comprendre le produit,
 - Vibe expérimental / limité.
 - Accès testeur, portail, reveal one-shot, feedback corrélé et un chemin gouverné minimal `WRITE_FILE` prouvé.
 - Un policy profile minimal par client pilot, appliqué côté ADP, avec `executionMode` borné à `shadow`, `review`, `enforced`.
+- Une couche de vérification offline existe déjà côté ADP :
+  - trace canonique v0
+  - policy verifier offline v0
+  - decision-quality-checker v0 mini
 
 ## Flux d'accès
 
@@ -88,31 +92,50 @@ Ce n'est pas un bug.
 
 ## Vérité produit de ce pack
 
-### Prouvé
+### PROUVÉ LIVE
 
 - accès testeur
 - portail
 - reveal one-shot
+- `/health`
+- `/evaluate`
 - Claude prêt
 - Codex prêt
 - policy profile minimal par client pilot
 - modes `shadow / review / enforced`
+- monotonie du policy profile
 - feedback corrélé
 - un chemin gouverné minimal `WRITE_FILE` prouvé
 
-### Prouvé avec caveat
+### PROUVÉ LOCAL
 
-- Codex prêt avec friction native résiduelle réduite
+- schéma public du policy profile
+- exemple public du policy profile
 
-### Expérimental / limité
+### PROUVÉ OFFLINE
 
-- Vibe
+- trace canonique v0
+- policy verifier offline v0
+- decision-quality-checker v0 mini
+
+Cette couche améliore l'audit et la défendabilité.
+Elle ne transforme pas ce repo public en outil de vérification self-serve.
+
+### INFÉRÉ
+
+- ce pack public suffit pour comprendre rapidement le pilot avant reveal
+
+### NON PROUVÉ
+
+- un chemin Vibe utile au niveau Claude / Codex
+- un multi-host large
+- une plateforme générale déjà industrialisée
+
+### HORS SCOPE
+
 - self-serve large policy profile
 - édition libre des policies
+- Vibe comme chemin canonique de départ
+- moteur configurable par le client
 
-### À venir / conditionnel
-
-- Agents IA non-code
-- multi-host large
-- self-serve complet
-- plateforme générale
+Vibe reste visible comme direction produit, pas comme chemin canonique prouvé.

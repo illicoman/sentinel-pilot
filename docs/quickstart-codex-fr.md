@@ -2,6 +2,8 @@
 
 Codex est prêt. Claude reste recommandé pour le premier test, puis Codex vient juste après.
 
+Statut du chemin : `PROUVÉ LIVE`.
+
 Le portail est obligatoire.
 Le reveal est obligatoire.
 Le clone seul est insuffisant.

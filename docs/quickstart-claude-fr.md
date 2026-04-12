@@ -2,6 +2,8 @@
 
 Claude est le chemin principal recommandé pour un premier test Sentinel.
 
+Statut du chemin : `PROUVÉ LIVE`.
+
 Le portail est obligatoire.
 Le reveal est obligatoire.
 Le clone seul est insuffisant.

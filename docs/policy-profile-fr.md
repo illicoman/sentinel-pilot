@@ -21,6 +21,30 @@ Ce profile ne vit pas dans ce repo.
 
 La vraie configuration active d un client pilot vit cote ADP, pas dans GitHub.
 
+## Statut de preuve
+
+### PROUVÉ LIVE
+
+- le profile minimal existe
+- il est valide cote ADP
+- il est compile cote ADP
+- il agit reellement sur la decision
+- il fonctionne aujourd hui sur `/evaluate`, Claude MCP et Codex
+- `executionMode` fonctionne aujourd hui sur ce meme perimetre
+- la monotonie est respectee
+
+### PROUVÉ LOCAL
+
+- le schema public de ce repo existe
+- l exemple public de ce repo existe
+
+### HORS SCOPE
+
+- Vibe
+- self-serve large
+- edition libre des policies
+- objets internes du moteur
+
 ## A quoi il sert aujourd hui
 
 Le profile minimal sert a exprimer un petit nombre de bornes de gouvernance stables au-dessus de packs deja existants.
@@ -196,6 +220,7 @@ Ce repo sert a :
 - demander un acces
 - preparer un test
 - voir un schema et un exemple publics bornes
+  - localement et documentairement seulement
 
 Ce repo ne sert pas a :
 

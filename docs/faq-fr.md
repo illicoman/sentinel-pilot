@@ -66,6 +66,20 @@ Non. Le profile minimal public reste monotone. Il peut annoter ou rehausser, mai
 
 Le périmètre public prouvé aujourd'hui est `/evaluate`, Claude et Codex. Vibe reste hors scope pour ce profile minimal public.
 
+## Le produit a-t-il déjà une couche de trace et de vérification ?
+
+Oui, côté ADP.
+
+Aujourd'hui, le produit porte déjà :
+
+- une trace canonique v0
+- un policy verifier offline v0
+- un decision-quality-checker v0 mini
+
+Cette couche est `PROUVÉ OFFLINE`.
+Elle améliore l'audit et la défendabilité.
+Elle n'est pas exposée ici comme un service self-serve.
+
 ## Vibe est-il concerné ?
 
 Non. Vibe reste expérimental / limité et n'est pas couvert par ce profile minimal public.
