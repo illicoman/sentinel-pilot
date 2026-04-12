@@ -29,10 +29,10 @@ Ce dépôt ne doit jamais être lu comme la vérité runtime.
 
 1. Demander un accès.
 2. Attendre l'approbation.
-3. Ouvrir le magic link.
+3. Ouvrir le magic link public `portail.html#magic_link=...`.
 4. Ouvrir le portail.
 5. Faire le reveal one-shot.
-6. Choisir un host.
+6. Choisir un host canonique.
 7. Matérialiser la configuration locale.
 8. Vérifier `/health`, `/evaluate`, puis jouer un premier test utile.
 
@@ -41,6 +41,13 @@ Le reveal est obligatoire.
 Le clone seul est insuffisant.
 Aucun secret n'est versionné dans ce dépôt.
 La vraie configuration active d'un policy profile ne vit pas dans ce dépôt public.
+La vérité des credentials, des sessions et du reveal vit côté ADP.
+
+Chemins canoniques aujourd'hui :
+
+- Claude : URL MCP révélée `AGENT_DECISION_MCP_URL`, puis `claude mcp add`.
+- Codex : token révélé `AGENT_DECISION_MCP_TOKEN`, puis `.codex/config.toml` à partir de l'exemple versionné.
+- Vibe : visible, mais pas chemin canonique public.
 
 ## Policy profile minimal
 

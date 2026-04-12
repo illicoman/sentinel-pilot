@@ -147,6 +147,7 @@ test('canonical warnings remain explicit', () => {
   assert.match(combinedText, /Le portail est obligatoire\./);
   assert.match(combinedText, /Le reveal est obligatoire\./);
   assert.match(combinedText, /Le clone seul est insuffisant\./);
+  assert.match(combinedText, /portail\.html#magic_link=/);
   assert.match(combinedText, /Source de vérité documentaire/);
   assert.match(combinedText, /agent-decision-plane/);
   assert.match(combinedText, /Ce dépôt ne doit jamais être lu comme la vérité runtime\./);
@@ -154,6 +155,10 @@ test('canonical warnings remain explicit', () => {
   assert.match(combinedText, /La vraie configuration active vit côté ADP\./);
   assert.match(combinedText, /Ce repo public ne contient jamais la vraie configuration(?: active)? d[' ]un client pilot\./);
   assert.match(combinedText, /Ce repo public ne suffit pas à activer un profile\./);
+  assert.match(combinedText, /Claude .*AGENT_DECISION_MCP_URL/);
+  assert.match(combinedText, /claude mcp add/);
+  assert.match(combinedText, /Codex .*AGENT_DECISION_MCP_TOKEN/);
+  assert.match(combinedText, /Authorization: Bearer/);
   assert.match(combinedText, /Ce n'est pas du policy authoring libre\./);
   assert.match(combinedText, /pas de self-serve large/i);
   assert.match(combinedText, /monotone/i);
@@ -174,6 +179,8 @@ test('the repo does not suggest a false canonical path', () => {
     /édition libre des policies est ouverte/i,
     /review et enforced sont toujours différents/i,
     /review et enforced donnent toujours des verdicts différents/i,
+    /shadowOnly:\s*true/i,
+    /export AGENT_DECISION_MCP_URL='https:\/\/decision-mcp\.frenchlink\.fr\/mcp'/i,
   ];
 
   for (const pattern of forbiddenClaims) {

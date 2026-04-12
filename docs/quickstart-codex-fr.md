@@ -25,6 +25,7 @@ Le quickstart Codex suppose que vous avez déjà:
 - `AGENT_DECISION_MCP_TOKEN`
 
 Gardez ces valeurs dans le shell local seulement.
+Si le reveal montre aussi une `AGENT_DECISION_MCP_URL`, elle reste surtout utile pour Claude. Le chemin canonique Codex consomme le token.
 
 ## 2. Cloner le repo
 
@@ -70,12 +71,21 @@ curl -fsS "${AGENT_DECISION_API_URL%/}/evaluate" \
   }'
 ```
 
+Attendu:
+
+- `decision`
+- `nextSafeAction`
+- `enforcement: external`
+- éventuellement `policyProfile` si votre client pilot a un profile actif
+
 ## 7. Vérifier le MCP public
 
 ```bash
 curl -i -X OPTIONS 'https://decision-mcp.frenchlink.fr/mcp' \
   -H "Authorization: Bearer $AGENT_DECISION_MCP_TOKEN"
 ```
+
+Le MCP public nu, sans bearer token, n'est pas le chemin public canonique.
 
 ## 8. Premier test utile dans Codex
 

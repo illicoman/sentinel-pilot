@@ -31,6 +31,9 @@ Depuis le reveal, récupérez seulement en local:
 
 Ne versionnez jamais ces valeurs.
 
+Le chemin canonique Claude ne part pas d'un MCP public nu.
+`AGENT_DECISION_MCP_URL` est l'URL MCP révélée, déjà liée à votre token de testeur.
+
 ## 3. Cloner le repo
 
 ```bash
@@ -38,28 +41,23 @@ git clone https://github.com/illicoman/sentinel-pilot.git
 cd sentinel-pilot
 ```
 
-## 4. Matérialiser la configuration Claude
+## 4. Exporter les valeurs locales
 
 ```bash
-cp examples/mcp.json.example .mcp.json
+export AGENT_DECISION_API_URL='https://decision-api.frenchlink.fr'
+export AGENT_DECISION_API_KEY='<révélée une seule fois dans le portail>'
+export AGENT_DECISION_MCP_URL='<URL MCP révélée une seule fois dans le portail>'
 ```
-
-Remplacez `__REVEAL_MCP_URL__` dans `.mcp.json` par l'URL MCP révélée dans le portail.
-
-Ce fichier d'exemple n'est pas prêt à l'emploi.
 
 ## 5. Vérifier `/health`
 
 ```bash
-export AGENT_DECISION_API_URL='https://decision-api.frenchlink.fr'
 curl -fsS "${AGENT_DECISION_API_URL%/}/health"
 ```
 
 ## 6. Vérifier `/evaluate`
 
 ```bash
-export AGENT_DECISION_API_KEY='<révélée une seule fois dans le portail>'
-
 curl -fsS "${AGENT_DECISION_API_URL%/}/evaluate" \
   -H 'content-type: application/json' \
   -H "x-api-key: $AGENT_DECISION_API_KEY" \
@@ -75,13 +73,16 @@ Attendu:
 
 - `decision`
 - `nextSafeAction`
-- `shadowOnly: true`
 - `enforcement: external`
+- éventuellement `policyProfile` si votre client pilot a un profile actif
 
 ## 7. Vérifier la connexion MCP
 
 ```bash
-claude --mcp-config .mcp.json --strict-mcp-config mcp list
+claude mcp add --scope local --transport http \
+  agent_decision_plane_public \
+  "$AGENT_DECISION_MCP_URL"
+claude mcp list
 ```
 
 ## 8. Premier test utile
@@ -106,3 +107,9 @@ claude --print \
 - un flux public lisible
 - un premier appel utile après reveal
 - un profile minimal par client pilot peut influencer la décision, y compris avec `executionMode`, sans ouvrir un éditeur libre de policies
+
+## Note de vérité
+
+Le chemin canonique Claude reste le snippet révélé puis `claude mcp add`.
+
+`examples/mcp.json.example` reste une aide locale possible, pas la vérité runtime ni le chemin public principal.
