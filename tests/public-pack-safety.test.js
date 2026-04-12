@@ -132,6 +132,15 @@ test('host statuses stay coherent and explicit', () => {
   assert.match(combinedText, /Codex prêt/);
   assert.match(combinedText, /Codex prêt avec friction native résiduelle réduite/);
   assert.match(combinedText, /Vibe expérimental \/ limité/);
+  assert.match(combinedText, /hors scope canonique/i);
+  assert.match(combinedText, /maxResultSizeChars/);
+  assert.match(combinedText, /PermissionDenied/);
+  assert.match(combinedText, /outputSchema/);
+  assert.match(combinedText, /metadata/);
+  assert.match(combinedText, /elicitations/);
+  assert.match(combinedText, /session context/);
+  assert.match(combinedText, /computer use/);
+  assert.match(combinedText, /defer/);
   assert.match(combinedText, /policy profile minimal par client pilot/i);
   assert.match(combinedText, /executionMode/);
   assert.match(combinedText, /shadow/);
@@ -179,6 +188,15 @@ test('the repo does not suggest a false canonical path', () => {
     /édition libre des policies est ouverte/i,
     /review et enforced sont toujours différents/i,
     /review et enforced donnent toujours des verdicts différents/i,
+    /computer use est couvert/i,
+    /computer use est prêt/i,
+    /computer use est pret/i,
+    /defer est ouvert/i,
+    /defer est prêt/i,
+    /defer est pret/i,
+    /metadata est déjà expos/i,
+    /elicitations sont déjà expos/i,
+    /session context est déjà expos/i,
     /shadowOnly:\s*true/i,
     /export AGENT_DECISION_MCP_URL='https:\/\/decision-mcp\.frenchlink\.fr\/mcp'/i,
   ];

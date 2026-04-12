@@ -43,6 +43,20 @@ Cette pile :
 - ne modifie pas le hot path
 - ne transforme pas Sentinel en plateforme générale de model checking
 
+## Frontières host actuelles
+
+- Claude est le premier host canonique public:
+  - `maxResultSizeChars` améliore le headroom des reponses riches
+  - la correlation `PermissionDenied` ameliore surtout la preuve
+  - ni `computer use`, ni `defer` ne sont ouverts ici
+- Codex est le second host canonique public:
+  - `outputSchema` renforce surtout le contrat machine-readable
+  - `metadata`, `elicitations` et `session context` restent des watchlists
+- Vibe reste visible seulement comme direction et veille:
+  - pas de chemin pilote primaire
+  - pas de promesse de parite
+  - pas de smoke public large a raconter comme ferme
+
 ## Portée publique de ce repo
 
 Ce dépôt ne prétend pas exposer toute la plateforme. Il rend seulement testable le chemin public minimal: accès, portail, reveal, config locale et premier test utile.

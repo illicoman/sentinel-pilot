@@ -1,6 +1,6 @@
 # Quickstart Vibe
 
-Vibe est expérimental / limité.
+Vibe est expérimental / limité et hors scope canonique.
 
 Ne commencez pas ici. Commencez par Claude, puis Codex.
 
@@ -18,6 +18,7 @@ Une piste bornée pour comprendre l'état actuel de Vibe, pas un guide de démar
 - le même portail existe
 - le reveal one-shot reste la source des valeurs locales
 - le seul chemin Vibe borné prouvé passe par une URL MCP tokenisée issue du reveal
+- quelques signaux interessants existent cote config locale, filtering et modes
 
 ## Ce qui n'est pas promis
 
@@ -25,6 +26,7 @@ Une piste bornée pour comprendre l'état actuel de Vibe, pas un guide de démar
 - pas de smoke complet grand public
 - pas de Bearer public présenté comme stable pour Vibe
 - pas de mode interactif présenté comme prouvé
+- pas de chemin pilote primaire
 
 ## Si vous allez quand même plus loin
 
@@ -45,7 +47,6 @@ curl -fsS "${AGENT_DECISION_API_URL%/}/health"
 
 ## Conclusion honnête
 
-Vibe expérimental / limité.
+Vibe expérimental / limité et hors scope canonique.
 
-Le seul chemin canonique prouvé ici reste un chemin borné et local issu du reveal. Ce repo ne doit pas être lu comme un feu vert large pour Vibe.
-
+Le seul chemin Vibe prouve ici reste un chemin borne et local issu du reveal. Ce n est pas un chemin canonique du pilot. Ce repo ne doit pas etre lu comme un feu vert large pour Vibe.

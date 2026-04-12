@@ -108,6 +108,14 @@ claude --print \
 - un premier appel utile après reveal
 - un profile minimal par client pilot peut influencer la décision, y compris avec `executionMode`, sans ouvrir un éditeur libre de policies
 
+## Nuances host actuelles
+
+- `PROUVÉ LIVE`: le gateway public expose maintenant `_meta["anthropic/maxResultSizeChars"] = 24000` sur les tools utiles.
+- `PROUVÉ LIVE`: un `PermissionDenied` natif Claude peut etre corrige avec une evidence Sentinel sur le meme geste.
+- ces deux points ameliorent surtout la robustesse et la preuve ; ils ne changent pas le sens des decisions.
+- `computer use` n est pas couvert dans le pilot canonique v1.
+- `defer` reste une watchlist future, pas une capacite prouvee dans ce pack.
+
 ## Note de vérité
 
 Le chemin canonique Claude reste le snippet révélé puis `claude mcp add`.

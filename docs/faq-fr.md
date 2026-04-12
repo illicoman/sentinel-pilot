@@ -80,9 +80,29 @@ Cette couche est `PROUVÉ OFFLINE`.
 Elle améliore l'audit et la défendabilité.
 Elle n'est pas exposée ici comme un service self-serve.
 
+## Que change `maxResultSizeChars` pour Claude ?
+
+Le gateway public peut maintenant annoncer a Claude un budget de resultat plus large sur les tools utiles. Cela ameliore surtout le headroom des reponses riches. Cela ne change ni le verdict, ni la semantique produit.
+
+## Que signifie la corrélation `PermissionDenied` côté Claude ?
+
+Un refus natif Claude `PermissionDenied` peut maintenant etre lu avec une evidence Sentinel sur le meme geste. Cela ameliore surtout la preuve et la lisibilite de la demo. Cela ne transforme pas Sentinel en enforcement interne du host Claude.
+
+## Que change `outputSchema` pour Codex ?
+
+`outputSchema` rend les reponses MCP utiles plus machine-readable cote Codex. Le gain principal est structurel: verdict, raison et prochaine action sure sont mieux typés. Cela ne change pas la semantique produit.
+
+## `computer use` est-il couvert ?
+
+Non. `computer use` n est pas couvert dans le pilot canonique v1.
+
+## `defer` est-il déjà ouvert ?
+
+Non. `defer` reste une opportunite future discutable cote Claude. Ce n est pas une capacite prouvee actuelle.
+
 ## Vibe est-il concerné ?
 
-Non. Vibe reste expérimental / limité et n'est pas couvert par ce profile minimal public.
+Vibe reste expérimental / limité et hors scope canonique. Il existe quelques signaux techniques intéressants, mais cela ne suffit pas à en faire un chemin pilote primaire ni une promesse produit publique.
 
 ## Est-ce du self-serve ?
 

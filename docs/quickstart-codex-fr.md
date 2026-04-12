@@ -108,3 +108,12 @@ Codex prêt avec friction native résiduelle réduite.
 Le premier signal de vérité reste le tool call utile. Un affichage de type `codex mcp list` peut rester moins parlant qu'un tool call réussi.
 
 Le policy profile minimal, quand il existe pour votre client pilot, est appliqué côté ADP. Il peut aussi embarquer un `executionMode` borné. Ce repo public n'héberge ni la vraie configuration active, ni un mécanisme d'édition libre.
+
+## Nuances host actuelles
+
+- `PROUVÉ LIVE`: le gateway public expose maintenant `outputSchema` sur les tools MCP utiles.
+- le gain principal est structurel:
+  - meilleur contrat machine-readable
+  - meilleure lisibilite du verdict et de la prochaine action sure
+- cela ne change pas la semantique produit.
+- `metadata`, `elicitations` et `session context` restent des watchlists futures cote Codex.

@@ -31,17 +31,23 @@ Ce pack public raconte une seule histoire: comprendre Sentinel, demander un acc�
 
 - Claude est le chemin principal recommandé.
 - Codex est disponible proprement après reveal.
+- côté Claude, `maxResultSizeChars` augmente surtout le headroom des réponses riches et la corrélation `PermissionDenied` améliore surtout la preuve.
+- côté Codex, `outputSchema` rend les réponses MCP utiles plus machine-readable.
 - Le profile minimal par client pilot est prouvé dans un cadre borné sur `/evaluate`, Claude et Codex.
 - `shadow` sert à observer et calibrer sans changer le verdict final.
 - `review` et `enforced` restent monotones : ils peuvent rehausser, jamais relaxer.
 - `review` et `enforced` peuvent parfois donner le même verdict visible sur le sous-ensemble v1 actuel.
 - La vraie configuration active d'un profile vit côté ADP, pas dans ce repo public.
 - Vibe reste visible pour montrer la direction produit, pas pour annoncer une parité de maturité.
+- Vibe reste hors scope canonique comme chemin pilote primaire.
 - Le portail est obligatoire.
 - Le reveal est obligatoire.
 - Le clone seul est insuffisant.
 - Ce repo public ne suffit pas à activer un profile.
 - Pas de self-serve large.
+- `computer use` n est pas couvert dans le pilot canonique v1.
+- `defer` reste une watchlist future cote Claude.
+- `metadata`, `elicitations` et `session context` restent des watchlists cote Codex.
 
 ## Grille de preuve utile
 

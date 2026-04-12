@@ -84,9 +84,15 @@ Ce n'est pas un bug.
 
 ## Quel host choisir
 
-- Claude: chemin recommandé pour le premier test.
-- Codex: chemin prêt et propre après reveal, avec une friction native résiduelle documentée.
-- Vibe: piste visible mais secondaire. Ne commencez pas ici.
+- Claude: chemin recommandé pour le premier test, avec `maxResultSizeChars` live sur les tools utiles et une corrélation bornée `PermissionDenied` -> evidence Sentinel qui améliore surtout la preuve.
+- Codex: chemin canonique juste après Claude, avec `outputSchema` live sur les tools utiles pour un contrat plus machine-readable.
+- Vibe: experimental / limité et hors scope canonique. Ne commencez pas ici.
+
+Nuances importantes:
+
+- `computer use` n est pas couvert dans le pilot canonique v1.
+- `defer` cote Claude reste une opportunite future, pas une capacite prouvee.
+- `metadata`, `elicitations` et `session context` cote Codex restent des watchlists, pas des capacites ouvertes.
 
 ## Ce dépôt n'est pas
 
