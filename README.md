@@ -4,6 +4,15 @@ Sentinel aide une équipe à décider avant l'exécution d'une action sensible. 
 
 Ce dépôt public est un pack testeur minimal. Il sert à comprendre le produit, demander un accès, préparer une configuration locale et jouer un premier test utile. Il n'est ni le portail, ni la couche d'enforcement, ni une réserve de secrets.
 
+## Source de vérité documentaire
+
+- `agent-decision-plane` porte la vérité système, architecture, preuves, policy profile et pile de vérification.
+- `sentinel-pilot` reste un pack public minimal.
+- `frenchlink` reste la surface UX et le site public.
+- `repo-exec-middleware` reste la boundary `permit / verify` fail-closed.
+
+Ce dépôt ne doit jamais être lu comme la vérité runtime.
+
 ## Ce que vous pouvez tester aujourd'hui
 
 - Claude prêt.
@@ -78,6 +87,7 @@ Ce n'est pas un bug.
 - un portail self-serve complet
 - un repo prêt sans reveal
 - une promesse de parité entre tous les hosts
+- la source de vérité système ou runtime
 
 ## Commencer
 

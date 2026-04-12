@@ -147,6 +147,9 @@ test('canonical warnings remain explicit', () => {
   assert.match(combinedText, /Le portail est obligatoire\./);
   assert.match(combinedText, /Le reveal est obligatoire\./);
   assert.match(combinedText, /Le clone seul est insuffisant\./);
+  assert.match(combinedText, /Source de vérité documentaire/);
+  assert.match(combinedText, /agent-decision-plane/);
+  assert.match(combinedText, /Ce dépôt ne doit jamais être lu comme la vérité runtime\./);
   assert.match(combinedText, /La vraie configuration active d'un policy profile ne vit pas dans ce dépôt public\./);
   assert.match(combinedText, /La vraie configuration active vit côté ADP\./);
   assert.match(combinedText, /Ce repo public ne contient jamais la vraie configuration(?: active)? d[' ]un client pilot\./);

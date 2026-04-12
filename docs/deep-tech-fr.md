@@ -2,6 +2,8 @@
 
 Sentinel traite un problème simple à formuler et difficile à fermer: décider assez tôt si une action sensible d'agent peut partir, sans dissoudre cette décision dans le host et sans confondre décision, accès et enforcement.
 
+Ce dépôt public ne porte qu'un sous-ensemble public borné de cette histoire. La vérité système détaillée reste dans `agent-decision-plane`.
+
 ## Problème
 
 Les prompts et la revue après coup arrivent souvent trop tard quand un agent veut toucher à de la production, de l'auth ou à une écriture sensible.
