@@ -10,6 +10,7 @@ const essentialFiles = [
   'AGENTS.md',
   'LICENSE',
   '.gitignore',
+  '.codex/config.toml',
   'docs/what-you-can-test-fr.md',
   'docs/request-access-fr.md',
   'docs/quickstart-claude-fr.md',
@@ -150,6 +151,37 @@ test('host statuses stay coherent and explicit', () => {
   assert.match(combinedText, /PROUVÉ LOCAL/);
   assert.match(combinedText, /PROUVÉ OFFLINE/);
   assert.match(combinedText, /HORS SCOPE/);
+});
+
+test('codex public example stays aligned with the canonical project profile', () => {
+  const gitignore = read('.gitignore');
+  const codexProjectConfig = read('.codex/config.toml');
+  const codexExample = read('examples/codex.config.toml.example');
+  const codexQuickstart = read('docs/quickstart-codex-fr.md');
+  const readme = read('README.md');
+
+  assert.doesNotMatch(gitignore, /^\.codex\/config\.toml$/m);
+  assert.match(codexProjectConfig, /approval_policy = "untrusted"/);
+  assert.match(codexProjectConfig, /sandbox_mode = "workspace-write"/);
+  assert.match(codexProjectConfig, /network_access = false/);
+  assert.match(codexProjectConfig, /url = "https:\/\/decision-mcp\.frenchlink\.fr\/mcp\?adp_client=codex"/);
+  assert.match(codexProjectConfig, /bearer_token_env_var = "AGENT_DECISION_MCP_TOKEN"/);
+  assert.doesNotMatch(codexProjectConfig, /mcp_token=/i);
+
+  assert.match(codexExample, /approval_policy = "untrusted"/);
+  assert.match(codexExample, /sandbox_mode = "workspace-write"/);
+  assert.match(codexExample, /network_access = false/);
+  assert.match(codexExample, /url = "https:\/\/decision-mcp\.frenchlink\.fr\/mcp\?adp_client=codex"/);
+  assert.match(codexExample, /bearer_token_env_var = "AGENT_DECISION_MCP_TOKEN"/);
+  assert.doesNotMatch(codexExample, /mcp_token=/i);
+
+  assert.match(codexQuickstart, /repo porte deja `?\.codex\/config\.toml`?/i);
+  assert.match(codexQuickstart, /miroir exportable/i);
+  assert.match(codexQuickstart, /approval_policy = "untrusted"/);
+  assert.match(codexQuickstart, /sandbox_mode = "workspace-write"/);
+  assert.match(codexQuickstart, /projet `trusted`/i);
+  assert.match(codexQuickstart, /\?adp_client=codex/i);
+  assert.match(readme, /repo trusted avec `?\.codex\/config\.toml`? versionn/i);
 });
 
 test('canonical warnings remain explicit', () => {

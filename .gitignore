@@ -1,5 +1,7 @@
 .mcp.json
-.codex/
+.codex/*
+!.codex/
+!.codex/config.toml
 .vibe/
 .env
 .env.*
@@ -7,4 +9,3 @@
 *.local
 *.tmp
 .DS_Store
-

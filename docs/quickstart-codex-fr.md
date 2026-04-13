@@ -34,14 +34,19 @@ git clone https://github.com/illicoman/sentinel-pilot.git
 cd sentinel-pilot
 ```
 
-## 3. Matérialiser la configuration locale Codex
+## 3. Verifier le profil projet Codex versionne
 
-```bash
-mkdir -p .codex
-cp examples/codex.config.toml.example .codex/config.toml
-```
+Le repo porte deja `.codex/config.toml`.
+Ne l'editez pas pour y mettre des secrets.
+L'exemple public garde un role de miroir exportable pour les repos qui ne versionnent pas le vrai profil projet.
+La posture locale reste volontairement sobre et reproductible:
 
-Ne committez jamais `.codex/config.toml`.
+- `approval_policy = "untrusted"`
+- `sandbox_mode = "workspace-write"`
+- `network_access = false`
+- `url = "https://decision-mcp.frenchlink.fr/mcp?adp_client=codex"`
+
+Pour que Codex charge ce profil automatiquement, ouvrez aussi ce clone comme projet `trusted`.
 
 ## 4. Exporter les variables locales
 
@@ -81,11 +86,12 @@ Attendu:
 ## 7. Vérifier le MCP public
 
 ```bash
-curl -i -X OPTIONS 'https://decision-mcp.frenchlink.fr/mcp' \
+curl -i -X OPTIONS 'https://decision-mcp.frenchlink.fr/mcp?adp_client=codex' \
   -H "Authorization: Bearer $AGENT_DECISION_MCP_TOKEN"
 ```
 
 Le MCP public nu, sans bearer token, n'est pas le chemin public canonique.
+Le contrat MCP utile reste borne par ADP; le profil projet versionne ne fait que materialiser la posture locale Codex attendue.
 
 ## 8. Premier test utile dans Codex
 

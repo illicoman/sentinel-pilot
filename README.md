@@ -46,7 +46,7 @@ La vérité des credentials, des sessions et du reveal vit côté ADP.
 Chemins canoniques aujourd'hui :
 
 - Claude : URL MCP révélée `AGENT_DECISION_MCP_URL`, puis `claude mcp add`.
-- Codex : token révélé `AGENT_DECISION_MCP_TOKEN`, puis `.codex/config.toml` à partir de l'exemple versionné.
+- Codex : token révélé `AGENT_DECISION_MCP_TOKEN`, puis repo trusted avec `.codex/config.toml` versionné, miroir du profil projet canonique ADP.
 - Vibe : visible, mais pas chemin canonique public.
 
 ## Policy profile minimal

@@ -1,7 +1,6 @@
-# Miroir exportable du profil projet Codex canonique versionne dans ADP.
-# Copier vers .codex/config.toml seulement apres le portail et le reveal.
-# Ne pas committer .codex/config.toml.
-# Garder AGENT_DECISION_MCP_TOKEN dans le shell local.
+# Canonical trusted-project Codex profile for Sentinel public pack.
+# This file contains no secrets and is meant to stay versioned.
+# Keep AGENT_DECISION_MCP_TOKEN in the local shell only.
 
 approval_policy = "untrusted"
 sandbox_mode = "workspace-write"
