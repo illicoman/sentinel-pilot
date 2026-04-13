@@ -11,6 +11,8 @@ const essentialFiles = [
   'LICENSE',
   '.gitignore',
   '.codex/config.toml',
+  '.agents/skills/sentinel-codex-smoke/SKILL.md',
+  '.agents/skills/sentinel-codex-smoke/agents/openai.yaml',
   'docs/what-you-can-test-fr.md',
   'docs/request-access-fr.md',
   'docs/quickstart-claude-fr.md',

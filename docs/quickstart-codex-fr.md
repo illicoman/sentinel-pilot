@@ -107,6 +107,16 @@ Puis:
 Use only the MCP tool explain_decision for: update sensitive config in prod on config/prod.env. Reply only with three lines: Action, Decision, Next safe action.
 ```
 
+Si vous voulez garder Codex strictement sur ce workflow, le repo embarque aussi la skill:
+
+- `.agents/skills/sentinel-codex-smoke/SKILL.md`
+
+Prompt explicite utile:
+
+```text
+Use $sentinel-codex-smoke to run or audit the canonical governed Sentinel Codex smoke for this repo without printing secrets.
+```
+
 ## Note de réalité
 
 Codex prêt avec friction native résiduelle réduite.

@@ -1,0 +1,7 @@
+interface:
+  display_name: "Sentinel Codex Smoke"
+  short_description: "Rejouer le smoke Codex gouverne."
+  default_prompt: "Use $sentinel-codex-smoke to run or audit the canonical governed Sentinel Codex smoke for this repo."
+
+policy:
+  allow_implicit_invocation: true
