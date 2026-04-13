@@ -194,3 +194,4 @@ Elle ne transforme pas ce repo public en outil de vérification self-serve.
 - moteur configurable par le client
 
 Vibe reste visible comme direction produit, pas comme chemin canonique prouvé.
+hotfix
