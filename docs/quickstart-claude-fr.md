@@ -41,7 +41,28 @@ git clone https://github.com/illicoman/sentinel-pilot.git
 cd sentinel-pilot
 ```
 
-## 4. Exporter les valeurs locales
+Le clone embarque déjà:
+
+- `CLAUDE.md`
+- `.claude/settings.json`
+- `.claude/settings.local.json.example`
+- `.claude/hooks/`
+- `.claude/lib/`
+
+Aucun téléchargement supplémentaire n'est nécessaire après le clone.
+
+## 4. Matérialiser l'aide locale non secrète
+
+Optionnel:
+
+```bash
+cp .claude/settings.local.json.example .claude/settings.local.json
+```
+
+Ce fichier local ne doit porter que des valeurs non secrètes.
+Gardez `AGENT_DECISION_API_KEY` et `AGENT_DECISION_MCP_URL` dans le shell local seulement.
+
+## 5. Exporter les valeurs locales
 
 ```bash
 export AGENT_DECISION_API_URL='https://decision-api.frenchlink.fr'
@@ -49,13 +70,13 @@ export AGENT_DECISION_API_KEY='<révélée une seule fois dans le portail>'
 export AGENT_DECISION_MCP_URL='<URL MCP révélée une seule fois dans le portail>'
 ```
 
-## 5. Vérifier `/health`
+## 6. Vérifier `/health`
 
 ```bash
 curl -fsS "${AGENT_DECISION_API_URL%/}/health"
 ```
 
-## 6. Vérifier `/evaluate`
+## 7. Vérifier `/evaluate`
 
 ```bash
 curl -fsS "${AGENT_DECISION_API_URL%/}/evaluate" \
@@ -76,7 +97,7 @@ Attendu:
 - `enforcement: external`
 - éventuellement `policyProfile` si votre client pilot a un profile actif
 
-## 7. Vérifier la connexion MCP
+## 8. Vérifier la connexion MCP
 
 ```bash
 claude mcp add --scope local --transport http \
@@ -85,7 +106,13 @@ claude mcp add --scope local --transport http \
 claude mcp list
 ```
 
-## 8. Premier test utile
+## 9. Laisser les hooks projet s'activer
+
+Les hooks projet sont déjà embarqués via `.claude/settings.json`.
+Ils restent shadow-only et ne déplacent ni l'enforcement ni la décision profonde hors ADP.
+Ils ajoutent seulement une guidance locale sur `ConfigChange`, `UserPromptSubmit`, `PreToolUse` et `PostToolUseFailure`.
+
+## 10. Premier test utile
 
 ```bash
 claude --print \
@@ -118,6 +145,6 @@ claude --print \
 
 ## Note de vérité
 
-Le chemin canonique Claude reste le snippet révélé puis `claude mcp add`.
+Le chemin canonique Claude reste le snippet révélé puis `claude mcp add`, avec les hooks projet déjà embarqués dans le clone.
 
 `examples/mcp.json.example` reste une aide locale possible, pas la vérité runtime ni le chemin public principal.

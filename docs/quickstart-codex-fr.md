@@ -42,11 +42,20 @@ git clone https://github.com/illicoman/sentinel-pilot.git
 cd sentinel-pilot
 ```
 
+Le clone embarque déjà:
+
+- `.codex/config.toml`
+- `.codex/config.toml.example`
+- `.agents/skills/sentinel-codex-smoke/SKILL.md`
+
+Aucune étape de téléchargement supplémentaire n'est nécessaire après le clone.
+
 ## 3. Verifier le profil projet Codex versionne
 
 Le repo porte deja `.codex/config.toml`.
 Ne l'editez pas pour y mettre des secrets.
-L'exemple public garde un role de miroir exportable pour les repos qui ne versionnent pas le vrai profil projet.
+Le repo porte aussi `.codex/config.toml.example` comme miroir exportable direct.
+`examples/codex.config.toml.example` garde un role de miroir exportable documentaire pour les repos qui ne versionnent pas le vrai profil projet.
 La posture locale reste volontairement sobre et reproductible:
 
 - `approval_policy = "untrusted"`

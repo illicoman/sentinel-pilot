@@ -8,6 +8,10 @@ Sentinel décide avant l'exécution d'une action sensible puis renvoie une sorti
 
 Claude prêt. Codex prêt avec friction native résiduelle réduite. Vibe expérimental / limité. Vous pouvez aussi tester le flux d'accès, le portail, le reveal one-shot, `/health`, `/evaluate` et un policy profile minimal par client pilot dans un cadre borné.
 
+## Le pack embarque-t-il déjà Claude et Codex ?
+
+Oui. Le clone embarque déjà les hooks projet Claude via `CLAUDE.md` et `.claude/settings.json`, ainsi que le profil projet Codex via `.codex/config.toml`, `.codex/config.toml.example` et la skill `.agents/skills/sentinel-codex-smoke`.
+
 ## Faut-il un portail ?
 
 Oui. Le portail est obligatoire.
@@ -20,9 +24,25 @@ Pour copier les credentials une seule fois puis éviter tout réaffichage des se
 
 Non. Le clone seul est insuffisant.
 
+## Pourquoi n'y a-t-il pas de download post-clone ?
+
+Parce que le pilot assisté actuel privilégie un pack public simple et déjà lisible après clone. Le reveal reste obligatoire, mais les surfaces projet Claude et Codex sont déjà embarquées sans secret.
+
 ## Claude, Codex et Vibe: quelle différence ?
 
 Claude est le chemin recommandé et prêt aujourd'hui. Codex est prêt aussi, avec une friction native résiduelle réduite. Vibe reste expérimental / limité et ne doit pas être traité comme un point de départ canonique.
+
+## Les secrets sont-ils dans le repo ?
+
+Non. Aucun secret n'est versionné ici. Les valeurs locales viennent du portail puis du reveal one-shot.
+
+## Où vit la vraie configuration ?
+
+La vraie configuration active vit côté ADP. Ce repo public ne contient qu'un schéma, un exemple documentaire et les surfaces locales de bootstrap.
+
+## Le repo public contient-il la vraie policy active ?
+
+Non. Ce repo public ne contient jamais la vraie configuration active d'un client pilot.
 
 ## Peut-on configurer Sentinel pour chaque client pilot ?
 
@@ -45,14 +65,6 @@ Oui, dans un cadre minimal et borné. Un profile minimal par client pilot existe
 ## Pourquoi review et enforced peuvent-ils parfois donner le même verdict visible ?
 
 Parce que le sous-ensemble v1 actuel reste volontairement étroit. Aujourd'hui, les overlays publics prouvés relèvent surtout vers `REQUIRE_APPROVAL`. Dans ce cadre, `review` et `enforced` peuvent partager le même verdict observable. La différence reste réelle dans le mode, l'audit et l'effet appliqué. Ce n'est pas un bug.
-
-## Où vit la vraie configuration ?
-
-La vraie configuration active vit côté ADP. Ce repo public ne contient qu'un schéma et un exemple documentaires.
-
-## Le repo public contient-il la vraie policy active ?
-
-Non. Ce repo public ne contient jamais la vraie configuration active d'un client pilot.
 
 ## Peut-on éditer librement les policies ?
 
@@ -107,10 +119,6 @@ Vibe reste expérimental / limité et hors scope canonique. Il existe quelques s
 ## Est-ce du self-serve ?
 
 Non. Le portail reste obligatoire. Le reveal reste obligatoire. Le backend reste obligatoire. Ce repo public ne suffit pas à activer un profile.
-
-## Où sont les secrets ?
-
-Ils ne sont pas dans ce repo. Aucun secret n'est versionné ici. Les valeurs locales viennent du portail puis du reveal one-shot.
 
 ## Comment demander l'accès ?
 

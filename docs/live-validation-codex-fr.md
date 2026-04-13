@@ -39,8 +39,8 @@ Comme pour Claude:
 
 ## Chemin réellement joué
 
-1. Lire [README.md](/var/www/sentinel-pilot/README.md).
-2. Lire [docs/quickstart-codex-fr.md](/var/www/sentinel-pilot/docs/quickstart-codex-fr.md).
+1. Lire [README.md](../README.md).
+2. Lire [docs/quickstart-codex-fr.md](./quickstart-codex-fr.md).
 3. Vérifier qu'aucune config locale Codex n'existe au départ.
 4. Rejouer l'état portail sans magic link approuvé.
 5. Vérifier `GET /health` depuis l'environnement propre.
@@ -93,4 +93,3 @@ Le blocage Codex n'est pas une contradiction du quickstart. Le blocage est anté
   - `/evaluate`
   - vérification MCP
   - premier tool call utile
-

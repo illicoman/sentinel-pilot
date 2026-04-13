@@ -1,0 +1,6 @@
+{
+  "env": {
+    "AGENT_DECISION_API_URL": "https://decision-api.frenchlink.fr",
+    "SENTINEL_CLAUDE_SHADOW_STATE_DIR": "/tmp/sentinel-pilot-claude-shadow-state"
+  }
+}

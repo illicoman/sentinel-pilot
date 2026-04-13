@@ -8,11 +8,26 @@ const repoRoot = path.resolve(__dirname, '..');
 const essentialFiles = [
   'README.md',
   'AGENTS.md',
+  'CLAUDE.md',
   'LICENSE',
   '.gitignore',
+  '.claude/settings.json',
+  '.claude/settings.local.json.example',
+  '.claude/hooks/config-change.js',
+  '.claude/hooks/user-prompt-submit.js',
+  '.claude/hooks/pre-tool-use.js',
+  '.claude/hooks/post-tool-use-failure.js',
+  '.claude/lib/json-stdio.js',
+  '.claude/lib/config-change-guard.js',
+  '.claude/lib/user-prompt-preclassification.js',
+  '.claude/lib/pre-tool-use-shadow.js',
+  '.claude/lib/post-tool-use-failure-guidance.js',
+  '.claude/lib/shadow-state.js',
   '.codex/config.toml',
+  '.codex/config.toml.example',
   '.agents/skills/sentinel-codex-smoke/SKILL.md',
   '.agents/skills/sentinel-codex-smoke/agents/openai.yaml',
+  'docs/execplans/sentinel-pilot-claude-codex-pack-sync-v1.md',
   'docs/what-you-can-test-fr.md',
   'docs/request-access-fr.md',
   'docs/quickstart-claude-fr.md',
@@ -28,6 +43,7 @@ const essentialFiles = [
   'examples/policy-profile.example.json',
   'scripts/smoke-health.sh',
   'scripts/smoke-evaluate.sh',
+  'tests/claude-project-pack.test.js',
   'tests/public-pack-safety.test.js',
 ];
 
@@ -60,6 +76,7 @@ function listFiles(dir) {
 const combinedText = [
   read('README.md'),
   read('AGENTS.md'),
+  read('CLAUDE.md'),
   read('docs/what-you-can-test-fr.md'),
   read('docs/request-access-fr.md'),
   read('docs/quickstart-claude-fr.md'),
@@ -126,7 +143,7 @@ test('no obvious secret material or forbidden file types are versioned', () => {
       assert.doesNotMatch(content, pattern, `${relativePath} contains forbidden secret-like content`);
     }
 
-    assert.ok(!content.includes(`${internalPathPrefix}/`), `${relativePath} exposes an internal filesystem path`);
+    assert.ok(!content.includes(internalPathPrefix), `${relativePath} exposes an internal filesystem path`);
   }
 });
 
@@ -135,6 +152,7 @@ test('host statuses stay coherent and explicit', () => {
   assert.match(combinedText, /Codex prêt/);
   assert.match(combinedText, /Codex prêt avec friction native résiduelle réduite/);
   assert.match(combinedText, /Vibe expérimental \/ limité/);
+  assert.match(combinedText, /pilot assisté/i);
   assert.match(combinedText, /hors scope canonique/i);
   assert.match(combinedText, /maxResultSizeChars/);
   assert.match(combinedText, /PermissionDenied/);
@@ -155,15 +173,17 @@ test('host statuses stay coherent and explicit', () => {
   assert.match(combinedText, /HORS SCOPE/);
 });
 
-test('codex public example stays aligned with the canonical project profile', () => {
+test('codex public examples stay aligned with the canonical project profile', () => {
   const gitignore = read('.gitignore');
   const codexProjectConfig = read('.codex/config.toml');
-  const codexExample = read('examples/codex.config.toml.example');
+  const codexProjectExample = read('.codex/config.toml.example');
+  const codexExportExample = read('examples/codex.config.toml.example');
   const codexQuickstart = read('docs/quickstart-codex-fr.md');
   const readme = read('README.md');
   const agents = read('AGENTS.md');
 
-  assert.doesNotMatch(gitignore, /^\.codex\/config\.toml$/m);
+  assert.match(gitignore, /^!\.codex\/config\.toml$/m);
+  assert.match(gitignore, /^!\.codex\/config\.toml\.example$/m);
   assert.match(codexProjectConfig, /approval_policy = "untrusted"/);
   assert.match(codexProjectConfig, /sandbox_mode = "workspace-write"/);
   assert.match(codexProjectConfig, /network_access = false/);
@@ -171,14 +191,17 @@ test('codex public example stays aligned with the canonical project profile', ()
   assert.match(codexProjectConfig, /bearer_token_env_var = "AGENT_DECISION_MCP_TOKEN"/);
   assert.doesNotMatch(codexProjectConfig, /mcp_token=/i);
 
-  assert.match(codexExample, /approval_policy = "untrusted"/);
-  assert.match(codexExample, /sandbox_mode = "workspace-write"/);
-  assert.match(codexExample, /network_access = false/);
-  assert.match(codexExample, /url = "https:\/\/decision-mcp\.frenchlink\.fr\/mcp\?adp_client=codex"/);
-  assert.match(codexExample, /bearer_token_env_var = "AGENT_DECISION_MCP_TOKEN"/);
-  assert.doesNotMatch(codexExample, /mcp_token=/i);
+  [codexProjectExample, codexExportExample].forEach((content) => {
+    assert.match(content, /approval_policy = "untrusted"/);
+    assert.match(content, /sandbox_mode = "workspace-write"/);
+    assert.match(content, /network_access = false/);
+    assert.match(content, /url = "https:\/\/decision-mcp\.frenchlink\.fr\/mcp\?adp_client=codex"/);
+    assert.match(content, /bearer_token_env_var = "AGENT_DECISION_MCP_TOKEN"/);
+    assert.doesNotMatch(content, /mcp_token=/i);
+  });
 
   assert.match(codexQuickstart, /repo porte deja `?\.codex\/config\.toml`?/i);
+  assert.match(codexQuickstart, /`?\.codex\/config\.toml\.example`?/i);
   assert.match(codexQuickstart, /miroir exportable/i);
   assert.match(codexQuickstart, /approval_policy = "untrusted"/);
   assert.match(codexQuickstart, /sandbox_mode = "workspace-write"/);
@@ -195,10 +218,53 @@ test('codex public example stays aligned with the canonical project profile', ()
   assert.match(readme, /\.agents\/skills\/sentinel-codex-smoke/);
 });
 
+test('claude project pack stays embedded and public-safe', () => {
+  const gitignore = read('.gitignore');
+  const claude = read('CLAUDE.md');
+  const settings = read('.claude/settings.json');
+  const localExample = read('.claude/settings.local.json.example');
+  const quickstart = read('docs/quickstart-claude-fr.md');
+  const readme = read('README.md');
+  const agents = read('AGENTS.md');
+
+  assert.match(gitignore, /^\.claude\/settings\.local\.json$/m);
+  assert.match(claude, /pack public minimal pour le pilot assiste Sentinel/i);
+  assert.match(claude, /`CLAUDE\.md`/);
+  assert.match(claude, /`\.claude\/settings\.json`/);
+  assert.match(claude, /shadow-only/i);
+  assert.match(claude, /Le portail reste obligatoire\./);
+  assert.match(claude, /Le reveal reste obligatoire\./);
+  assert.match(claude, /clone seul reste insuffisant/i);
+
+  assert.match(settings, /"ConfigChange"/);
+  assert.match(settings, /"UserPromptSubmit"/);
+  assert.match(settings, /"PreToolUse"/);
+  assert.match(settings, /"PostToolUseFailure"/);
+  assert.match(settings, /\$CLAUDE_PROJECT_DIR/);
+  assert.doesNotMatch(settings, /agent-decision-plane/i);
+  assert.doesNotMatch(settings, /feature\/control-plane/i);
+
+  assert.match(localExample, /AGENT_DECISION_API_URL/);
+  assert.match(localExample, /SENTINEL_CLAUDE_SHADOW_STATE_DIR/);
+  assert.doesNotMatch(localExample, /AGENT_DECISION_API_KEY/);
+  assert.doesNotMatch(localExample, /AGENT_DECISION_MCP_URL/);
+
+  assert.match(quickstart, /Le clone embarque déjà/i);
+  assert.match(quickstart, /Aucun téléchargement supplémentaire n'est nécessaire après le clone/i);
+  assert.match(quickstart, /`CLAUDE\.md`/);
+  assert.match(quickstart, /`\.claude\/settings\.json`/);
+  assert.match(quickstart, /`\.claude\/settings\.local\.json\.example`/);
+  assert.match(readme, /hooks projet Claude/i);
+  assert.match(readme, /Aucun download post-clone supplémentaire n'est requis/i);
+  assert.match(agents, /Ordre de lecture Claude/i);
+  assert.match(agents, /`CLAUDE\.md` = invariants projet Claude/i);
+});
+
 test('canonical warnings remain explicit', () => {
   assert.match(combinedText, /Le portail est obligatoire\./);
   assert.match(combinedText, /Le reveal est obligatoire\./);
   assert.match(combinedText, /Le clone seul est insuffisant\./);
+  assert.match(combinedText, /Aucun download post-clone supplémentaire n'est requis/i);
   assert.match(combinedText, /portail\.html#magic_link=/);
   assert.match(combinedText, /Source de vérité documentaire/);
   assert.match(combinedText, /agent-decision-plane/);

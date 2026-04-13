@@ -1,7 +1,6 @@
-# Miroir exportable du profil projet Codex canonique versionne a la racine dans `.codex/config.toml.example`.
-# Copier vers .codex/config.toml seulement dans un repo qui ne versionne pas deja ce profil projet.
-# Ne pas committer un `.codex/config.toml` contenant des secrets.
-# Garder AGENT_DECISION_MCP_TOKEN dans le shell local.
+# Exportable mirror of the canonical trusted-project Codex profile for Sentinel public pack.
+# This file contains no secrets and stays safe to version.
+# Keep AGENT_DECISION_MCP_TOKEN in the local shell only.
 
 approval_policy = "untrusted"
 sandbox_mode = "workspace-write"

@@ -2,6 +2,11 @@
 
 Ce pack public raconte une seule histoire: comprendre Sentinel, demander un accès, ouvrir le portail, faire le reveal, choisir un host, puis jouer un premier test utile.
 
+Le pack embarque déjà les hooks projet Claude, la configuration projet Codex et la skill Codex utile au smoke borne.
+Le pilot reste assisté.
+Le reveal reste obligatoire.
+Les secrets restent hors repo.
+
 ## Ce qui est testable maintenant
 
 - Comprendre le produit en quelques minutes.
@@ -12,8 +17,8 @@ Ce pack public raconte une seule histoire: comprendre Sentinel, demander un acc�
 - Vérifier `POST /evaluate`.
 - Constater qu'un profile minimal par client pilot peut influencer la décision dans un cadre borné.
 - Constater que ce profile supporte trois modes explicites : `shadow`, `review`, `enforced`.
-- Configurer Claude localement.
-- Configurer Codex localement.
+- Configurer Claude localement avec les hooks projet déjà embarqués.
+- Configurer Codex localement avec `.codex/config.toml`, `.codex/config.toml.example` et la skill déjà embarqués.
 - Envoyer un feedback corrélé après un test.
 - Comprendre qu'un chemin gouverné minimal `WRITE_FILE` est déjà prouvé.
 - Comprendre qu'une couche offline de preuve existe côté ADP :
@@ -31,6 +36,7 @@ Ce pack public raconte une seule histoire: comprendre Sentinel, demander un acc�
 
 - Claude est le chemin principal recommandé.
 - Codex est disponible proprement après reveal.
+- le clone embarque déjà les surfaces projet Claude et Codex utiles; aucun download post-clone supplémentaire n'est requis.
 - côté Claude, `maxResultSizeChars` augmente surtout le headroom des réponses riches et la corrélation `PermissionDenied` améliore surtout la preuve.
 - côté Codex, `outputSchema` rend les réponses MCP utiles plus machine-readable.
 - Le profile minimal par client pilot est prouvé dans un cadre borné sur `/evaluate`, Claude et Codex.
@@ -65,6 +71,9 @@ Ce pack public raconte une seule histoire: comprendre Sentinel, demander un acc�
 
 ### PROUVÉ LOCAL
 
+- hooks projet Claude embarqués
+- profil projet Codex embarqué
+- skill Codex embarquée
 - schéma public et exemple public du policy profile
 
 ### PROUVÉ OFFLINE

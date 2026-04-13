@@ -59,8 +59,8 @@ Important:
 
 ## Chemin réellement joué
 
-1. Lire [README.md](/var/www/sentinel-pilot/README.md).
-2. Lire [docs/request-access-fr.md](/var/www/sentinel-pilot/docs/request-access-fr.md).
+1. Lire [README.md](../README.md).
+2. Lire [docs/request-access-fr.md](./request-access-fr.md).
 3. Créer un workspace jetable propre.
 4. Soumettre une demande `request-access` via la surface publique.
 5. Vérifier que le portail reste sans session tant qu'aucun magic link approuvé n'a été consommé.

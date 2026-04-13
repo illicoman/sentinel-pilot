@@ -21,9 +21,18 @@
 4. invoquer `$sentinel-codex-smoke` seulement pour rejouer ou auditer le smoke borne
 5. si un detail systeme manque ou diverge, remonter a la doc canonique ADP
 
+## Ordre de lecture Claude
+
+1. lire `CLAUDE.md`
+2. lire `docs/quickstart-claude-fr.md`
+3. verifier `.claude/settings.json`
+4. utiliser `.claude/settings.local.json.example` seulement comme aide locale non secrete
+5. si un detail systeme manque ou diverge, remonter a la doc canonique ADP
+
 Frontiere des couches:
 
 - `AGENTS.md` = discipline durable et garde-fous de session
+- `CLAUDE.md` = invariants projet Claude
 - skill `sentinel-codex-smoke` = workflow reutilisable
 - MCP public = decision et evidence externes
 - docs ADP = verite systeme
@@ -44,6 +53,7 @@ Ne jamais faire porter a la skill ce qui releve de la verite systeme ADP.
 Le portail est obligatoire.
 Le reveal est obligatoire.
 Le clone seul est insuffisant.
+Aucun download post-clone supplementaire n est requis pour charger les surfaces projet Claude et Codex.
 
 Avant de conclure qu un smoke Codex est bon, exiger:
 
@@ -55,6 +65,7 @@ Avant de conclure qu un smoke Codex est bon, exiger:
 - au moins un tool call utile reussi
 
 `codex mcp list` seul ne suffit pas comme preuve.
+Un hook Claude shadow utile n est jamais une preuve d enforcement.
 
 ## Discipline de session
 

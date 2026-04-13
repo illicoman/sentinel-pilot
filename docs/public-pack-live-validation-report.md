@@ -8,15 +8,15 @@ Valider le repo public `sentinel-pilot` comme surface testeur minimale, pas corr
 
 Repos sources laissés intacts:
 
-- `/var/www/frenchlink`
-- `/var/www/agent-decision-plane`
-- `/var/www/repo-exec-middleware`
+- `frenchlink`
+- `agent-decision-plane`
+- `repo-exec-middleware`
 
 ## Résumé exécutif
 
 Le lot produit deux conclusions différentes:
 
-1. le pack local candidat dans `/var/www/sentinel-pilot` est lisible et raconte honnêtement le bon chemin
+1. le pack local candidat dans `sentinel-pilot` est lisible et raconte honnêtement le bon chemin
 2. le repo GitHub public réellement clonable par un testeur externe n'est pas encore aligné avec ce pack local candidat
 
 Au moment du test:
@@ -62,15 +62,15 @@ Verdict:
 
 Relu comme un testeur:
 
-- [README.md](/var/www/sentinel-pilot/README.md)
-- [docs/request-access-fr.md](/var/www/sentinel-pilot/docs/request-access-fr.md)
-- [docs/what-you-can-test-fr.md](/var/www/sentinel-pilot/docs/what-you-can-test-fr.md)
-- [docs/quickstart-claude-fr.md](/var/www/sentinel-pilot/docs/quickstart-claude-fr.md)
-- [docs/quickstart-codex-fr.md](/var/www/sentinel-pilot/docs/quickstart-codex-fr.md)
-- [examples/mcp.json.example](/var/www/sentinel-pilot/examples/mcp.json.example)
-- [examples/codex.config.toml.example](/var/www/sentinel-pilot/examples/codex.config.toml.example)
-- [examples/vibe.config.toml.example](/var/www/sentinel-pilot/examples/vibe.config.toml.example)
-- [AGENTS.md](/var/www/sentinel-pilot/AGENTS.md)
+- [README.md](../README.md)
+- [docs/request-access-fr.md](./request-access-fr.md)
+- [docs/what-you-can-test-fr.md](./what-you-can-test-fr.md)
+- [docs/quickstart-claude-fr.md](./quickstart-claude-fr.md)
+- [docs/quickstart-codex-fr.md](./quickstart-codex-fr.md)
+- [examples/mcp.json.example](../examples/mcp.json.example)
+- [examples/codex.config.toml.example](../examples/codex.config.toml.example)
+- [examples/vibe.config.toml.example](../examples/vibe.config.toml.example)
+- [AGENTS.md](../AGENTS.md)
 
 Réponses:
 
@@ -82,7 +82,7 @@ Réponses:
 
 ## Phase C/D - Claude
 
-Voir [docs/live-validation-claude-fr.md](/var/www/sentinel-pilot/docs/live-validation-claude-fr.md).
+Voir [docs/live-validation-claude-fr.md](./live-validation-claude-fr.md).
 
 Verdict Claude:
 
@@ -101,7 +101,7 @@ Blocage exact:
 
 ## Phase E/F - Codex
 
-Voir [docs/live-validation-codex-fr.md](/var/www/sentinel-pilot/docs/live-validation-codex-fr.md).
+Voir [docs/live-validation-codex-fr.md](./live-validation-codex-fr.md).
 
 Verdict Codex:
 

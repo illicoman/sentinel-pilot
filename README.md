@@ -2,7 +2,20 @@
 
 Sentinel aide une équipe à décider avant l'exécution d'une action sensible. La sortie utile reste simple: `Action -> Decision -> Next safe action`.
 
-Ce dépôt public est un pack testeur minimal. Il sert à comprendre le produit, demander un accès, préparer une configuration locale et jouer un premier test utile. Il n'est ni le portail, ni la couche d'enforcement, ni une réserve de secrets.
+Ce dépôt public est un pack testeur minimal pour le pilot assisté actuel. Il sert à comprendre le produit, demander un accès, préparer une configuration locale et jouer un premier test utile. Il n'est ni le portail, ni la couche d'enforcement, ni une réserve de secrets.
+
+Le clone embarque déjà:
+
+- les hooks projet Claude via `CLAUDE.md`, `.claude/settings.json`, `.claude/hooks/` et `.claude/lib/`
+- la configuration projet Codex via `.codex/config.toml` et `.codex/config.toml.example`
+- la skill Codex `.agents/skills/sentinel-codex-smoke`
+- les quickstarts et helpers locaux non sensibles utiles
+
+Aucun download post-clone supplémentaire n'est requis pour charger ces surfaces projet.
+Le portail est obligatoire.
+Le reveal est obligatoire.
+Le clone seul est insuffisant.
+Aucun secret n'est versionné dans ce dépôt.
 
 ## Source de vérité documentaire
 
@@ -39,20 +52,29 @@ Ce dépôt ne doit jamais être lu comme la vérité runtime.
 Le portail est obligatoire.
 Le reveal est obligatoire.
 Le clone seul est insuffisant.
-Aucun secret n'est versionné dans ce dépôt.
+Aucun download post-clone supplémentaire n'est requis pour charger les surfaces projet Claude et Codex.
 La vraie configuration active d'un policy profile ne vit pas dans ce dépôt public.
 La vérité des credentials, des sessions et du reveal vit côté ADP.
 
 Chemins canoniques aujourd'hui :
 
-- Claude : URL MCP révélée `AGENT_DECISION_MCP_URL`, puis `claude mcp add`.
-- Codex : token révélé `AGENT_DECISION_MCP_TOKEN`, puis repo trusted avec `.codex/config.toml` versionné, miroir du profil projet canonique ADP. Le repo embarque aussi la skill `.agents/skills/sentinel-codex-smoke`.
+- Claude : URL MCP révélée `AGENT_DECISION_MCP_URL`, puis `claude mcp add`. Le repo embarque déjà `CLAUDE.md`, `.claude/settings.json`, `.claude/settings.local.json.example` et les hooks projet partagés.
+- Codex : token révélé `AGENT_DECISION_MCP_TOKEN`, puis repo trusted avec `.codex/config.toml` versionné, miroir du profil projet canonique ADP. Le repo embarque aussi `.codex/config.toml.example` et la skill `.agents/skills/sentinel-codex-smoke`.
 - Vibe : visible, mais pas chemin canonique public.
+
+Ordre de lecture Claude dans ce repo :
+
+- `CLAUDE.md`
+- `docs/quickstart-claude-fr.md`
+- `.claude/settings.json`
+- `.claude/settings.local.json.example`
+- docs ADP si une nuance système manque
 
 Ordre de lecture Codex dans ce repo :
 
 - `AGENTS.md`
 - `docs/quickstart-codex-fr.md`
+- `.codex/config.toml`
 - `.agents/skills/sentinel-codex-smoke`
 - docs ADP si une nuance système manque
 
@@ -139,6 +161,9 @@ Nuances importantes:
 
 ### PROUVÉ LOCAL
 
+- hooks projet Claude embarqués
+- profil projet Codex embarqué
+- skill Codex embarquée
 - schéma public du policy profile
 - exemple public du policy profile
 
@@ -153,7 +178,7 @@ Elle ne transforme pas ce repo public en outil de vérification self-serve.
 
 ### INFÉRÉ
 
-- ce pack public suffit pour comprendre rapidement le pilot avant reveal
+- ce pack public réduit la friction testeur pour le pilot assisté en évitant un packaging post-clone séparé
 
 ### NON PROUVÉ
 

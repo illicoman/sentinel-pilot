@@ -2,6 +2,8 @@
 .codex/*
 !.codex/
 !.codex/config.toml
+!.codex/config.toml.example
+.claude/settings.local.json
 .vibe/
 .env
 .env.*
