@@ -49,6 +49,13 @@ Chemins canoniques aujourd'hui :
 - Codex : token révélé `AGENT_DECISION_MCP_TOKEN`, puis repo trusted avec `.codex/config.toml` versionné, miroir du profil projet canonique ADP. Le repo embarque aussi la skill `.agents/skills/sentinel-codex-smoke`.
 - Vibe : visible, mais pas chemin canonique public.
 
+Ordre de lecture Codex dans ce repo :
+
+- `AGENTS.md`
+- `docs/quickstart-codex-fr.md`
+- `.agents/skills/sentinel-codex-smoke`
+- docs ADP si une nuance système manque
+
 ## Policy profile minimal
 
 Vous pouvez aujourd'hui tester l'existence d'un profile minimal propre à un client pilot.

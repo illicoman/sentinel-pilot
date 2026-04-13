@@ -37,3 +37,32 @@ test('sentinel-codex-smoke skill reste etroite et alignee sur le workflow Codex 
   assert.match(openaiYaml, /Use \$sentinel-codex-smoke/);
   assert.match(openaiYaml, /allow_implicit_invocation: true/);
 });
+
+test('AGENTS, quickstart et skill gardent une frontiere claire pour Codex', () => {
+  const agents = read('AGENTS.md');
+  const quickstart = read('docs/quickstart-codex-fr.md');
+  const skill = read('.agents/skills/sentinel-codex-smoke/SKILL.md');
+
+  assert.match(agents, /Ordre de lecture Codex/i);
+  assert.match(agents, /AGENTS\.md.*discipline durable/i);
+  assert.match(agents, /skill `sentinel-codex-smoke` = workflow reutilisable/i);
+  assert.match(agents, /MCP public = decision et evidence externes/i);
+  assert.match(agents, /docs ADP = verite systeme/i);
+  assert.match(agents, /nouvelle session/i);
+  assert.match(agents, /`resume`/i);
+  assert.match(agents, /`fork`/i);
+  assert.match(agents, /repo ouvert comme projet `trusted`/i);
+  assert.match(agents, /`codex mcp list` seul ne suffit pas comme preuve/i);
+
+  assert.match(quickstart, /Ordre de lecture minimal pour Codex dans ce repo/i);
+  assert.match(quickstart, /\$sentinel-codex-smoke/);
+  assert.match(quickstart, /AGENTS\.md.*discipline durable/i);
+  assert.match(quickstart, /## 9\. Discipline de session/);
+  assert.match(quickstart, /`resume`/i);
+  assert.match(quickstart, /`fork`/i);
+
+  assert.match(skill, /reveal one-shot/i);
+  assert.match(skill, /repo `trusted`/i);
+  assert.match(skill, /list_policy_packs/);
+  assert.match(skill, /explain_decision/);
+});

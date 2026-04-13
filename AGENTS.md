@@ -13,6 +13,23 @@
 - la couche d'enforcement
 - un clone qui suffit à lui seul
 
+## Ordre de lecture Codex
+
+1. lire `AGENTS.md`
+2. lire `docs/quickstart-codex-fr.md`
+3. verifier `.codex/config.toml`
+4. invoquer `$sentinel-codex-smoke` seulement pour rejouer ou auditer le smoke borne
+5. si un detail systeme manque ou diverge, remonter a la doc canonique ADP
+
+Frontiere des couches:
+
+- `AGENTS.md` = discipline durable et garde-fous de session
+- skill `sentinel-codex-smoke` = workflow reutilisable
+- MCP public = decision et evidence externes
+- docs ADP = verite systeme
+
+Ne jamais faire porter a la skill ce qui releve de la verite systeme ADP.
+
 ## Chemin testeur à respecter
 
 1. demander un accès
@@ -27,6 +44,25 @@
 Le portail est obligatoire.
 Le reveal est obligatoire.
 Le clone seul est insuffisant.
+
+Avant de conclure qu un smoke Codex est bon, exiger:
+
+- reveal one-shot deja fait
+- token shell local present
+- repo ouvert comme projet `trusted`
+- `/health` sain
+- `/evaluate` sain avec `host = codex`
+- au moins un tool call utile reussi
+
+`codex mcp list` seul ne suffit pas comme preuve.
+
+## Discipline de session
+
+- nouvelle session pour un nouveau reveal, un nouveau clone ou un nouveau smoke
+- `resume` pour reprendre le meme smoke ou le meme blocage sans changer la cible
+- `fork` a partir d une base deja lisible pour separer exploration, smoke, correction et doc
+- ne pas melanger exploration, smoke, correction et doc dans une seule session
+- ne jamais coller un token, un snippet ou un magic link dans la session
 
 ## Statut des hosts
 
@@ -58,4 +94,3 @@ Ne jamais présenter ces statuts comme équivalents.
 - ne jamais ajouter de `.env`, `.ssh`, `.htpasswd` ou token réel
 - ne jamais fabriquer un faux quickstart prêt sans reveal
 - ne jamais faire croire que tous les hosts sont au même niveau
-

@@ -161,6 +161,7 @@ test('codex public example stays aligned with the canonical project profile', ()
   const codexExample = read('examples/codex.config.toml.example');
   const codexQuickstart = read('docs/quickstart-codex-fr.md');
   const readme = read('README.md');
+  const agents = read('AGENTS.md');
 
   assert.doesNotMatch(gitignore, /^\.codex\/config\.toml$/m);
   assert.match(codexProjectConfig, /approval_policy = "untrusted"/);
@@ -183,7 +184,15 @@ test('codex public example stays aligned with the canonical project profile', ()
   assert.match(codexQuickstart, /sandbox_mode = "workspace-write"/);
   assert.match(codexQuickstart, /projet `trusted`/i);
   assert.match(codexQuickstart, /\?adp_client=codex/i);
+  assert.match(codexQuickstart, /\$sentinel-codex-smoke/);
+  assert.match(codexQuickstart, /Discipline de session/i);
+  assert.match(agents, /Ordre de lecture Codex/i);
+  assert.match(agents, /docs ADP = verite systeme/i);
+  assert.match(agents, /`resume`/i);
+  assert.match(agents, /`fork`/i);
   assert.match(readme, /repo trusted avec `?\.codex\/config\.toml`? versionn/i);
+  assert.match(readme, /Ordre de lecture Codex dans ce repo/i);
+  assert.match(readme, /\.agents\/skills\/sentinel-codex-smoke/);
 });
 
 test('canonical warnings remain explicit', () => {
