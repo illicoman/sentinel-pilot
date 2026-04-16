@@ -57,7 +57,7 @@ test('AGENTS, quickstart et skill gardent une frontiere claire pour Codex', () =
   assert.match(quickstart, /Ordre de lecture minimal pour Codex dans ce repo/i);
   assert.match(quickstart, /\$sentinel-codex-smoke/);
   assert.match(quickstart, /AGENTS\.md.*discipline durable/i);
-  assert.match(quickstart, /## 9\. Discipline de session/);
+  assert.match(quickstart, /## 8\. Discipline de session/);
   assert.match(quickstart, /`resume`/i);
   assert.match(quickstart, /`fork`/i);
 

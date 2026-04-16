@@ -43,6 +43,8 @@ const essentialFiles = [
   'examples/policy-profile.example.json',
   'scripts/smoke-health.sh',
   'scripts/smoke-evaluate.sh',
+  'scripts/watch-claude-shadow.sh',
+  'scripts/watch-claude-canonical.sh',
   'tests/claude-project-pack.test.js',
   'tests/public-pack-safety.test.js',
 ];
@@ -254,7 +256,13 @@ test('claude project pack stays embedded and public-safe', () => {
   assert.match(quickstart, /`CLAUDE\.md`/);
   assert.match(quickstart, /`\.claude\/settings\.json`/);
   assert.match(quickstart, /`\.claude\/settings\.local\.json\.example`/);
+  assert.match(quickstart, /watch-claude-shadow\.sh/);
+  assert.match(quickstart, /watch-claude-canonical\.sh/);
+  assert.match(quickstart, /\/tmp\/sentinel-pilot-claude-shadow-state/);
+  assert.match(quickstart, /gate manuel contrôlé du pilot/i);
+  assert.match(quickstart, /-- "Use only the MCP tool explain_decision for: update sensitive config in prod on config\/prod\.env\. Reply only with three lines: Action, Decision, Next safe action\."/);
   assert.match(readme, /hooks projet Claude/i);
+  assert.match(readme, /Les étapes 1 à 5 forment le gate manuel contrôlé du pilot\./);
   assert.match(readme, /Aucun download post-clone supplémentaire n'est requis/i);
   assert.match(agents, /Ordre de lecture Claude/i);
   assert.match(agents, /`CLAUDE\.md` = invariants projet Claude/i);

@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const DEFAULT_SHADOW_STATE_DIR = '/tmp/sentinel-pilot-claude-shadow-state';
+const CANONICAL_EVENT_SOURCE = 'sentinel-shadow';
 
 function isPlainObject(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -12,6 +13,11 @@ function isPlainObject(value) {
 
 function normalizeNonEmptyString(value) {
   return typeof value === 'string' && value.trim().length > 0 ? value.trim() : null;
+}
+
+function normalizeDecision(value) {
+  const normalized = normalizeNonEmptyString(value);
+  return normalized ? normalized.toUpperCase() : null;
 }
 
 function normalizeHookPayload(payload = {}) {
@@ -62,15 +68,149 @@ function buildSessionShadowStatePath(sessionId, options = {}) {
   return path.join(resolveShadowStateDir(options), normalizedSessionId + '.jsonl');
 }
 
+function buildSessionCanonicalEventsPath(sessionId, options = {}) {
+  const normalizedSessionId = normalizeNonEmptyString(sessionId);
+
+  if (!normalizedSessionId) {
+    return null;
+  }
+
+  return path.join(resolveShadowStateDir(options), normalizedSessionId + '.canonical.jsonl');
+}
+
+function compactObject(value) {
+  return Object.keys(value).reduce(function assign(accumulator, key) {
+    if (value[key] === undefined || value[key] === null || value[key] === '') {
+      return accumulator;
+    }
+
+    accumulator[key] = value[key];
+    return accumulator;
+  }, {});
+}
+
+function buildShadowInputSummary(toolName, toolInput) {
+  if (!isPlainObject(toolInput)) {
+    return null;
+  }
+
+  if (toolName === 'Bash') {
+    return normalizeNonEmptyString(toolInput.command);
+  }
+
+  if (toolName === 'Edit' || toolName === 'MultiEdit' || toolName === 'Write') {
+    if (typeof toolInput.file_path === 'string' && toolInput.file_path.trim().length > 0) {
+      return toolInput.file_path.trim();
+    }
+
+    if (Array.isArray(toolInput.file_paths) && toolInput.file_paths.length > 0) {
+      return toolInput.file_paths
+        .filter(function keepNonEmptyString(value) {
+          return typeof value === 'string' && value.trim().length > 0;
+        })
+        .map(function normalizePath(value) {
+          return value.trim();
+        })
+        .join(', ');
+    }
+  }
+
+  return null;
+}
+
+function mapDecisionToCanonicalEventName(decision) {
+  if (decision === 'ALLOW') {
+    return 'decision.allow';
+  }
+
+  if (decision === 'DENY') {
+    return 'decision.deny';
+  }
+
+  if (decision === 'REQUIRE_APPROVAL') {
+    return 'decision.require_approval';
+  }
+
+  if (decision === 'MODIFY') {
+    return 'decision.modify';
+  }
+
+  return null;
+}
+
+function buildCanonicalEventsFromPreToolUse(payload = {}, result = {}, options = {}) {
+  const normalizedPayload = normalizeHookPayload(payload);
+
+  if (!normalizedPayload.toolName) {
+    return [];
+  }
+
+  const timestamp = normalizeNonEmptyString(options.timestamp) || new Date().toISOString();
+  const tool = normalizedPayload.toolName;
+  const input = buildShadowInputSummary(tool, normalizedPayload.toolInput);
+  const decision = normalizeDecision(result && result.decision);
+  const decisionEventName = mapDecisionToCanonicalEventName(decision);
+  const actionEvent = compactObject({
+    event: 'action.proposed',
+    tool,
+    input,
+    source: CANONICAL_EVENT_SOURCE,
+    timestamp,
+  });
+
+  if (!decisionEventName) {
+    return [actionEvent];
+  }
+
+  return [
+    actionEvent,
+    compactObject({
+      event: decisionEventName,
+      tool,
+      decision,
+      source: CANONICAL_EVENT_SOURCE,
+      timestamp,
+    }),
+  ];
+}
+
+function appendJsonLines(filePath, records) {
+  if (!filePath || !Array.isArray(records) || records.length === 0) {
+    return;
+  }
+
+  const directory = path.dirname(filePath);
+  const serialized = records.map(function serialize(record) {
+    return JSON.stringify(record);
+  }).join('\n') + '\n';
+
+  fs.mkdirSync(directory, { recursive: true });
+  fs.appendFileSync(filePath, serialized, 'utf8');
+}
+
+function appendPreToolUseCanonicalEvents(payload = {}, result = {}, options = {}) {
+  const normalizedPayload = normalizeHookPayload(payload);
+  const statePath = buildSessionCanonicalEventsPath(normalizedPayload.sessionId, options);
+  const events = buildCanonicalEventsFromPreToolUse(payload, result, options);
+
+  if (!statePath || events.length === 0) {
+    return [];
+  }
+
+  appendJsonLines(statePath, events);
+  return events;
+}
+
 function appendPreToolUseShadowRecord(payload = {}, result = {}, options = {}) {
   const normalizedPayload = normalizeHookPayload(payload);
   const statePath = buildSessionShadowStatePath(normalizedPayload.sessionId, options);
+
+  appendPreToolUseCanonicalEvents(payload, result, options);
 
   if (!statePath || !normalizedPayload.toolName || !result || !result.decision) {
     return null;
   }
 
-  const directory = path.dirname(statePath);
   const record = {
     recordedAt: new Date().toISOString(),
     sessionId: normalizedPayload.sessionId,
@@ -81,8 +221,7 @@ function appendPreToolUseShadowRecord(payload = {}, result = {}, options = {}) {
     hostActionSummary: normalizeNonEmptyString(result.hostActionSummary),
   };
 
-  fs.mkdirSync(directory, { recursive: true });
-  fs.appendFileSync(statePath, JSON.stringify(record) + '\n', 'utf8');
+  appendJsonLines(statePath, [record]);
   return record;
 }
 
@@ -122,9 +261,15 @@ function findLatestPreToolUseShadowRecord(payload = {}, options = {}) {
 
 module.exports = {
   appendPreToolUseShadowRecord,
+  appendPreToolUseCanonicalEvents,
+  buildCanonicalEventsFromPreToolUse,
+  buildSessionCanonicalEventsPath,
   buildSessionShadowStatePath,
+  buildShadowInputSummary,
   buildToolFingerprint,
   findLatestPreToolUseShadowRecord,
+  mapDecisionToCanonicalEventName,
   normalizeHookPayload,
+  normalizeDecision,
   resolveShadowStateDir,
 };

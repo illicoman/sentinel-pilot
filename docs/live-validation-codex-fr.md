@@ -2,6 +2,11 @@
 
 Date de validation: `2026-04-10`
 
+> Document historique.
+>
+> Ce constat date du `2026-04-10` et ne remplace pas les reruns host-native unifies dates `2026-04-15`.
+> Pour l etat courant canonique, lire `../README.md`, puis les docs ADP et les reports dates `2026-04-15`.
+
 ## Périmètre
 
 Valider si le repo public `sentinel-pilot` guide correctement un testeur vers le chemin canonique `README -> portal -> reveal -> Codex -> premier test utile`, en gardant la lecture honnête suivante:

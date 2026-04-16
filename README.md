@@ -26,12 +26,19 @@ Aucun secret n'est versionné dans ce dépôt.
 
 Ce dépôt ne doit jamais être lu comme la vérité runtime.
 
+## Statut des validations datees
+
+- `docs/live-validation-claude-fr.md` et `docs/live-validation-codex-fr.md` sont des constats historiques dates `2026-04-10`.
+- l etat courant canonique doit etre lu dans les docs ADP et dans les reports dates `2026-04-15`.
+
 ## Ce que vous pouvez tester aujourd'hui
 
-- Claude prêt.
-- Codex prêt avec friction native résiduelle réduite.
+- Claude prêt avec hook host-native `PreToolUse` prouvé en live sur un vrai appel Bash.
+- Claude et Codex disposent désormais d'une preuve live unifiée du cycle `1 -> 2 -> 3 -> 4` sur replay host-native `portal-issued`.
+- Codex garde une friction native résiduelle réduite et un contrat plus machine-readable.
 - Vibe expérimental / limité.
 - Accès testeur, portail, reveal one-shot, feedback corrélé et un chemin gouverné minimal `WRITE_FILE` prouvé.
+- `permit / verify` et write réel / no-write réel sont prouvés en live dans les replays host-native Claude et Codex.
 - Un policy profile minimal par client pilot, appliqué côté ADP, avec `executionMode` borné à `shadow`, `review`, `enforced`.
 - Une couche de vérification offline existe déjà côté ADP :
   - trace canonique v0
@@ -47,7 +54,11 @@ Ce dépôt ne doit jamais être lu comme la vérité runtime.
 5. Faire le reveal one-shot.
 6. Choisir un host canonique.
 7. Matérialiser la configuration locale.
-8. Vérifier `/health`, `/evaluate`, puis jouer un premier test utile.
+8. Lancer la base commune `./scripts/smoke-health.sh` puis `SENTINEL_HOST=<host> ./scripts/smoke-evaluate.sh`.
+9. Jouer un smoke utile officiel sur le host choisi, puis ouvrir le feedback corrélé.
+
+Les étapes 1 à 5 forment le gate manuel contrôlé du pilot.
+Le parcours technique court commence ensuite, à partir de la session portail puis du reveal.
 
 Le portail est obligatoire.
 Le reveal est obligatoire.
@@ -61,6 +72,14 @@ Chemins canoniques aujourd'hui :
 - Claude : URL MCP révélée `AGENT_DECISION_MCP_URL`, puis `claude mcp add`. Le repo embarque déjà `CLAUDE.md`, `.claude/settings.json`, `.claude/settings.local.json.example` et les hooks projet partagés.
 - Codex : token révélé `AGENT_DECISION_MCP_TOKEN`, puis repo trusted avec `.codex/config.toml` versionné, miroir du profil projet canonique ADP. Le repo embarque aussi `.codex/config.toml.example` et la skill `.agents/skills/sentinel-codex-smoke`.
 - Vibe : visible, mais pas chemin canonique public.
+
+Smoke officiel retenu aujourd'hui :
+
+- base commune Claude et Codex : `./scripts/smoke-health.sh` puis `SENTINEL_HOST=<host> ./scripts/smoke-evaluate.sh`
+- Claude : `claude mcp add`, puis `explain_decision`
+- Codex : repo `trusted` avec `.codex/config.toml` versionné, puis `explain_decision`
+- `list_policy_packs` et `OPTIONS /mcp` restent des probes secondaires ou de diagnostic, pas le smoke officiel
+- feedback corrélé immédiatement après le smoke via la surface FrenchLink
 
 Ordre de lecture Claude dans ce repo :
 
@@ -113,8 +132,8 @@ Ce n'est pas un bug.
 
 ## Quel host choisir
 
-- Claude: chemin recommandé pour le premier test, avec `maxResultSizeChars` live sur les tools utiles et une corrélation bornée `PermissionDenied` -> evidence Sentinel qui améliore surtout la preuve.
-- Codex: chemin canonique juste après Claude, avec `outputSchema` live sur les tools utiles pour un contrat plus machine-readable.
+- Claude: chemin recommandé pour le premier test, avec `maxResultSizeChars` live sur les tools utiles, une corrélation bornée `PermissionDenied` -> evidence Sentinel, un hook host-native prouvé en live et une preuve live unifiée `1 -> 2 -> 3 -> 4` désormais établie sur replay host-native Claude ; ne pas extrapoler à tous les hosts.
+- Codex: chemin canonique juste après Claude, avec `outputSchema` live sur les tools utiles et une preuve live unifiée du cycle `1 -> 2 -> 3 -> 4` via replay host-native `portal-issued` contre `decision-api` `692793b` ; ce niveau de preuve est désormais reproduit sur Claude, sans ouvrir tous les hosts.
 - Vibe: experimental / limité et hors scope canonique. Ne commencez pas ici.
 
 Nuances importantes:
@@ -152,7 +171,11 @@ Nuances importantes:
 - `/health`
 - `/evaluate`
 - Claude prêt
+- hook host-native Claude `PreToolUse` sur vrai `Bash`
+- flux host-native unique Claude `portal-issued` live contre `decision-api` `692793b`
 - Codex prêt
+- flux host-native unique Codex `portal-issued` live contre `decision-api` `692793b`
+- `permit / verify` et write/no-write réel dans ces replays Claude et Codex
 - policy profile minimal par client pilot
 - modes `shadow / review / enforced`
 - monotonie du policy profile
@@ -193,5 +216,4 @@ Elle ne transforme pas ce repo public en outil de vérification self-serve.
 - Vibe comme chemin canonique de départ
 - moteur configurable par le client
 
-Vibe reste visible comme direction produit, pas comme chemin canonique prouvé.
-hotfix
+Vibe reste visible comme direction produit, pas comme chemin canonique prouve.

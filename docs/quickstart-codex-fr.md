@@ -4,6 +4,12 @@ Codex est prêt. Claude reste recommandé pour le premier test, puis Codex vient
 
 Statut du chemin : `PROUVÉ LIVE`.
 
+Preuve actuelle du chemin :
+
+- flux host-native unique prouvé en live sur le replay `portal-issued` contre `decision-api` `692793b`
+- `permit / verify` et write/no-write réel observés dans ce même replay
+- cette preuve unifiée vaut aujourd'hui pour Codex et Claude ; elle ne vaut pas pour tous les hosts
+
 Le portail est obligatoire.
 Le reveal est obligatoire.
 Le clone seul est insuffisant.
@@ -73,24 +79,11 @@ export AGENT_DECISION_API_KEY='<révélée une seule fois dans le portail>'
 export AGENT_DECISION_MCP_TOKEN='<révélé une seule fois dans le portail>'
 ```
 
-## 5. Vérifier `/health`
+## 5. Lancer la base commune de smoke
 
 ```bash
-curl -fsS "${AGENT_DECISION_API_URL%/}/health"
-```
-
-## 6. Vérifier `/evaluate`
-
-```bash
-curl -fsS "${AGENT_DECISION_API_URL%/}/evaluate" \
-  -H 'content-type: application/json' \
-  -H "x-api-key: $AGENT_DECISION_API_KEY" \
-  -d '{
-    "userRequest": "update sensitive config in prod",
-    "host": "codex",
-    "environment": "prod",
-    "target": "config/prod.env"
-  }'
+./scripts/smoke-health.sh
+SENTINEL_HOST=codex ./scripts/smoke-evaluate.sh
 ```
 
 Attendu:
@@ -100,7 +93,7 @@ Attendu:
 - `enforcement: external`
 - éventuellement `policyProfile` si votre client pilot a un profile actif
 
-## 7. Vérifier le MCP public
+## 6. Vérifier le MCP public si nécessaire
 
 ```bash
 curl -i -X OPTIONS 'https://decision-mcp.frenchlink.fr/mcp?adp_client=codex' \
@@ -108,20 +101,20 @@ curl -i -X OPTIONS 'https://decision-mcp.frenchlink.fr/mcp?adp_client=codex' \
 ```
 
 Le MCP public nu, sans bearer token, n'est pas le chemin public canonique.
-Le contrat MCP utile reste borne par ADP; le profil projet versionne ne fait que materialiser la posture locale Codex attendue.
+Le contrat MCP utile reste borne par ADP; le profil projet versionne ne fait que materialiser la posture locale Codex attendue. Cette commande reste un diagnostic secondaire, pas le smoke officiel.
 
-## 8. Premier test utile dans Codex
+## 7. Smoke utile officiel dans Codex
 
 Prompt recommandé:
 
 ```text
-Use only the MCP tool list_policy_packs and return only the pack ids, one per line.
+Use only the MCP tool explain_decision for: update sensitive config in prod on config/prod.env. Reply only with three lines: Action, Decision, Next safe action.
 ```
 
-Puis:
+Probe secondaire utile seulement si vous voulez confirmer la surface MCP avant le smoke officiel :
 
 ```text
-Use only the MCP tool explain_decision for: update sensitive config in prod on config/prod.env. Reply only with three lines: Action, Decision, Next safe action.
+Use only the MCP tool list_policy_packs and return only the pack ids, one per line.
 ```
 
 Si vous voulez garder Codex strictement sur ce workflow, le repo embarque aussi la skill:
@@ -136,7 +129,13 @@ Use $sentinel-codex-smoke to run or audit the canonical governed Sentinel Codex 
 
 La skill peut aussi etre invoquee implicitement pour un smoke Codex borne, mais `AGENTS.md` reste la couche de discipline durable et ce quickstart reste la reference pratique.
 
-## 9. Discipline de session
+Puis laissez un feedback corrélé via la surface FrenchLink :
+
+```text
+https://frenchlink.fr/agent-decision-plane-testeurs/feedback.html
+```
+
+## 8. Discipline de session
 
 - ouvrir une nouvelle session pour un nouveau reveal, un nouveau clone ou un nouveau smoke
 - utiliser `resume` pour reprendre le meme smoke ou la meme correction sans changer la cible
@@ -148,7 +147,7 @@ La skill peut aussi etre invoquee implicitement pour un smoke Codex borne, mais 
 
 Codex prêt avec friction native résiduelle réduite.
 
-Le premier signal de vérité reste le tool call utile. Un affichage de type `codex mcp list` peut rester moins parlant qu'un tool call réussi.
+Le premier signal de vérité reste le tool call utile. Un affichage de type `codex mcp list` peut rester moins parlant qu'un tool call réussi. Il existe maintenant aussi une preuve live unifiée sur Codex replay, reproduite sur Claude ; elle ne doit pas être extrapolée à tous les hosts.
 
 Le policy profile minimal, quand il existe pour votre client pilot, est appliqué côté ADP. Il peut aussi embarquer un `executionMode` borné. Ce repo public n'héberge ni la vraie configuration active, ni un mécanisme d'édition libre.
 
